@@ -7,7 +7,7 @@ void Speaker::playTrack (int vol, int idx, TrackType trackType) {
   
 }
 
-void Speaker::setVolume() {
+void Speaker::setVolume(int pressure) {
   
 }
 

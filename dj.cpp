@@ -3,9 +3,11 @@
 #include "target.h"
 #include "textilesensor.h"
 
-void DJ::determineSong(target, currBlinkCombo) {
+void DJ::determineSong(Target target, LightCombo currBlinkCombo) {
   
-    
+    for(int i = 0; i < 8; i++) {
+      
+    }
     
     this.speaker.setVolume();
     
@@ -14,7 +16,7 @@ void DJ::determineSong(target, currBlinkCombo) {
     
 }
 
-void DJ::determineSound(target) {
+void DJ::determineSound(Target target) {
     
     this.speaker.setVolume();
   	

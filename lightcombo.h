@@ -8,7 +8,7 @@ enum Color { RED, BLUE, YELLOW};
 class LightCombo {
 
   //attr:
-  
+public:
   int target1Index; // this target region should be reachable by Dad
   int target2Index; // and for consistency, this second value should always be the region that can be reached by Ara (height constraint)
   

@@ -1,3 +1,7 @@
+#ifndef TARGET_H
+#define TARGET_H
+
+
 struct Target {
 
   //attr:
@@ -8,20 +12,5 @@ struct Target {
 
 };
 
-
-class TextileSensor { // this class should be friends with LEDController
-
-  //attr:
-  Target targets[8]; 
-  
-  //methods:
-  void updateTargetArray() {
-  	// this should update the 
-  }
-  bool allBlinkingTargetsTouched(LightCombo currBlinkCombo) {
-  	
-  }
-
-};
-
+#endif
 

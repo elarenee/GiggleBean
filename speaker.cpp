@@ -6,3 +6,23 @@ void Speaker::playTrack (int vol, int idx, TrackType trackType) {
   // to the tablet
   
 }
+
+void Speaker::setVolume() {
+  
+}
+
+void Speaker::stopPlayingTrack() {
+  
+}
+
+bool Speaker::songPlaying() {
+  
+ for(Sound const& s : this.songs) {
+  if(s.isPlaying)
+    return true;
+ } 
+ 
+ // if no songs are currently playing
+ return false;
+ 
+}

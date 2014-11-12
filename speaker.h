@@ -5,7 +5,8 @@ enum TrackType {Sound, Song};
 
 class Track {
 
-  //attr:
+//attr:  
+public:
   bool isPlaying;
   (int/double/timestamp??) startTime; // when the song/sound began playing 
   int duration; // how long the song/sound will play (in seconds)

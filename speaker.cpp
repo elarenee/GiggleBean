@@ -1,5 +1,21 @@
 #include "speaker.h"
 
+void Track::startTrack() {
+  time(startTime);
+  isPlaying = true;
+}
+
+void Track::updateIsPlaying() {
+  if (isPlaying) {
+    time_t now;
+    time(&now);
+    if (duration <= difftime(now, startTime)) {
+      isPlaying = false;
+    }
+  }
+}
+  
+
 
 void Speaker::playTrack (int vol, int idx, TrackType trackType) {
   // this function should send these three parameters over bluetooth 
@@ -7,9 +23,9 @@ void Speaker::playTrack (int vol, int idx, TrackType trackType) {
   
 }
 
-int Speaker::convertPressureToVolume(int pressure) {
+int Speaker::convertPressureToVolume(double pressure) {
   // somehow convert pressure to a "volume" integer and add it to additional volume
-  int volume = this.defaultVolume + pressure/*500*/;
+  int volume = this.defaultVolume + pressure/*500*/; // we'll lose precision here, but it's ok!
   return volume;
 }
 
@@ -25,18 +41,9 @@ bool Speaker::songPlaying() {
  
 }
 
-void Speaker::updateSongs(Target[] targetArray) {
+void Speaker::updateSongs() {
     //loop through songs
     for (int i = 0; i < 3; ++i) {
-        //check the targetArray and update each song accordingly
-        
-    }
-}
-
-void Speaker::updateSounds(Target[] targetArray) {
-    //loop through sounds
-    for (int i = 0; i < 2; ++i) {
-        //check the targetArray and update each song accordingly
-        
+        this.songs[i].updateIsPlaying();
     }
 }

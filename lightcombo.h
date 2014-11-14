@@ -26,6 +26,8 @@ public:
   
   //copy constructor
   LightCombo(const LightCombo& from);
+  
+  getTrackIndex();
 
 };
 

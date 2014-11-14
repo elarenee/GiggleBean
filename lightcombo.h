@@ -9,14 +9,18 @@ class LightCombo {
     
 public:
   //attr:
-  int target1Index; // this target region should be reachable by Dad
-  int target2Index; // and for consistency, this second value should always be the region that can be reached by Ara (height constraint)
+
+  // NOTE: These two integers will range from 0-7 because there are 8 possible target regions
+  // for pairs, both targets have values. target1 is the target Ara can reach.
+  // for single targets, target1 has a value and target2 is -1.
+  int target1Index; // use this target to get pressure reading for volume control. this should be Ara's target, if possible.
+  int target2Index; // -1 if not a target pair
   
-  // NOTE: ^^ These two integers ^^ will range from 0-7 because there are only 8 possible target regions
-  // however, if one of them is set as -1, this means that the combination only consists of one target region. i.e. only one region on the target is being lit up (presumably because it is only within Dad’s reach and Ara will be forced to ask Dad to help her)
   
-  Color color; // I’ve moved “color” from Target to LightCombo because it is never used within the TextileSensor class anyway. One layer of indirection has been removed. Anyway, it’s an attribute associated with LEDs, therefore, it should be in an LED-associated class
-  
+  // I’ve moved “color” from Target to LightCombo because it is never used within the TextileSensor class. 
+  // One layer of indirection has been removed.
+  Color color; 
+
   //constructor
   LightCombo(int a, int b, Color c);
   

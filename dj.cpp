@@ -3,21 +3,25 @@
 #include "target.h"
 #include "textilesensor.h"
 
-void DJ::determineSong(Target target, LightCombo currBlinkCombo) {
+void DJ::determineSong(LightCombo currBlinkCombo, const Target[] targets) {
   
-    for(int i = 0; i < 8; i++) {
-      
-    }
+    int target1_idx = currBlinkCombo.target1Index;
     
-    int new_vol = this.speaker.convertPressureToVolume();
+    double pressure = targets[target1_idx].pressureReading;
     
-    this.speaker.PlayTrack(new_vol, idx, TrackType.Song);
-    //calls PlayTrack (sends volume and array idx to tablet)
+    int new_vol = this.speaker.convertPressureToVolume(pressure);
+    
+    int itrack_dx = currBlinkCombo.getTrackIndex();
+    
+    this.speaker.PlayTrack(new_vol, track_idx, TrackType.Song);
     
 }
 
-void DJ::determineSound(Target target) {
+void DJ::determineSound(const Target[] targets) {
+  
+    double pressure = targets.pressureReading; 
     
+    int vol = speaker.defaultVolume; // there should be no volume regulation 
   	
     this.speaker.PlayTrack(vol, idx, TrackType.Sound);
     //calls PlayTrack (sends volume and array idx to tablet)

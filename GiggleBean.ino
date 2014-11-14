@@ -47,11 +47,14 @@
       }
       else {
         //adjust volume
-      }
-      
-      
+      } 
     }
-    dj.determineSound(); // may or may not play a sound depending on whether the textile is being touched somewhere
+    
+    else (dj.determineSound()) {
+    
+    
+    } // may or may not play a sound depending on whether the textile is being touched somewhere
+    
     if(songEnded) {
       leds.shuffleBlinkingLEDs();
     } 

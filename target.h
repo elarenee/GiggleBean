@@ -9,6 +9,7 @@ struct Target {
   int inPinNum; // this is the pin number associated with this target region’s analog sensor reading
   double pressureReading; // value retrieved from pin# inPinNum
   bool touched;
+  
 
 };
 

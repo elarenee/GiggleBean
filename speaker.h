@@ -1,6 +1,8 @@
 #ifndef SPEAKER_H
 #define SPEAKER_H
 
+#include "target.h"
+
 enum TrackType {Sound, Song};
 
 class Track {
@@ -27,8 +29,8 @@ class Speaker {
   int convertPressureToVolume(int pressure); 
   void playTrack(int vol, int idx, TrackType trackType);
   bool songPlaying();
-  void updateSounds();
-  bool updateSongs();
+  void updateSounds(Target[] targetArray);
+  bool updateSongs(Target[] targetArray);
 
 };
 

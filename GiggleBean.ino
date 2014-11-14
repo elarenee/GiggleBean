@@ -30,11 +30,15 @@
   
   void loop() {
     textile.updateTargetArray(); // read data from input pins on Arduino
-    dj.speaker.updateSounds(); // given Target array
+    //dj.speaker.updateSounds(); // given Target array
     dj.speaker.updateSongs(); 
 
     if(textile.allBlinkingTargetsTouched(leds.getCurBlinkCombo())) {
-      if(!dj.speaker.songPlaying() ) {
+      if(dj.speaker.songPlaying() ) {
+        //adjust volume
+        dj.adjustVolume(leds.getCurBlinkCombo());
+      }
+      else {
         leds.stopBlinking();
         dj.determineSong(leds.getCurBlinkCombo());
         // get the target1index from the LightCombo passed into the function. 
@@ -44,9 +48,6 @@
         
         // and then start playing the new song
       
-      }
-      else {
-        //adjust volume
       } 
     }
     

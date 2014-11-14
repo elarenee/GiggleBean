@@ -17,7 +17,17 @@ void DJ::determineSong(LightCombo currBlinkCombo, const Target[] targets) {
     
 }
 
+void DJ::adjustVolume(LightCombo currBlinkCombo) {
+     
+   
+    this.speaker.PlayTrack(new_vol, track_idx, TrackType.Song);
+}
+
 void DJ::determineSound(const Target[] targets) {
+  
+    for(int i = 0; i < 8; i++) {
+       
+    }
   
     double pressure = targets.pressureReading; 
     

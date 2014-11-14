@@ -3,6 +3,19 @@
 // this should update the values within the targets array based upon the data coming from the Arduino input pins
 void TextileSensor::updateTargetArray() {
   
+  // two parts: 1. read pressures from the pins and update pressure & isTouched vals
+  //            2. check play time on both tracks for each target and update isPlaying val
+  
+  //  iterate through all 8 targets
+  for (int i = 0; i < 8; ++i ) {
+    // read pins
+    
+    // check sounds
+    targets[i].sounds[0].updateIsPlaying();
+    targets[i].sounds[1].updateIsPlaying();
+    
+  }
+    
   
 }
 

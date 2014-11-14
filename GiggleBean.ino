@@ -41,20 +41,13 @@
       else {
         leds.stopBlinking();
         dj.determineSong(leds.getCurBlinkCombo(), textile.targets);
-        // get the target1index from the LightCombo passed into the function. 
-        // then get the color and pressure reading from TextileSensor class 
-        // (which owns the target array) … 
-        // maybe DJ and TextileSensor should be friends...
-        
-        // and then start playing the new song
-      
       } 
     }
-    
+    // may or may not play a sound depending on whether the textile is being touched somewhere
     else {
       dj.determineSound(leds.getCurBlinkCombo());
     
-    } // may or may not play a sound depending on whether the textile is being touched somewhere
+    } 
     
     if(songEnded) {
       leds.shuffleBlinkingLEDs();

@@ -18,7 +18,8 @@
 
 LEDController::LEDController() {
     //constructor
-    // Hard-coded array of possible combinations of targets that can be blinking simultaneously. We have to hard-code these values because we only want LEDs that are of the same color to be blinking at the same time. NOT complete yet
+    // Hard-coded array of possible combinations of targets that can be blinking simultaneously. 
+    // We have to hard-code these values because we only want LEDs that are of the same color to be blinking at the same time. NOT complete yet
     lightCombos= {  LightCombo(0,1,Color.BLUE), 
                     LightCombo(1,5,Color.BLUE), 
                     LightCombo(0,5,Color.BLUE),

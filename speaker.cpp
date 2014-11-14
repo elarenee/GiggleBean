@@ -23,7 +23,7 @@ void Speaker::playTrack (int vol, int idx, TrackType trackType) {
 
 int Speaker::convertPressureToVolume(double pressure) {
   // somehow convert pressure to a "volume" integer and add it to additional volume
-  int volume = this.defaultVolume + pressure/*500*/; // we'll lose precision here, but it's ok!
+  int volume = this.defaultVolume + pressure/*some equation with constants here*/; // we'll lose precision here, but it's ok!
   return volume;
 }
 

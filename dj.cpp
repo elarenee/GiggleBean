@@ -51,8 +51,5 @@ void DJ::determineSound(const Target[] targets) {
           targets[i].startTrack();
           
        }
-    }
-  
-    
-        
+    }       
 }

@@ -29,8 +29,7 @@
   }
   
   void loop() {
-    textile.updateTargetArray(); // read data from input pins on Arduino
-    //dj.speaker.updateSounds(); // given Target array
+    textile.updateTargetArray(); 
     dj.speaker.updateSongs(); 
 
     if(textile.allBlinkingTargetsTouched(leds.getCurBlinkCombo())) {

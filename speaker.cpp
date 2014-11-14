@@ -7,22 +7,28 @@ void Speaker::playTrack (int vol, int idx, TrackType trackType) {
   
 }
 
-void Speaker::convertPressureToVolume(int pressure) {
-  // somehow convert pressure to an "additional volume" integer
-}
-
-void Speaker::stopPlayingTrack() {
-  
+int Speaker::convertPressureToVolume(int pressure) {
+  // somehow convert pressure to a "volume" integer and add it to additional volume
+  int volume = this.defaultVolume + pressure/*500*/;
+  return volume;
 }
 
 bool Speaker::songPlaying() {
   
- for(Sound const& s : this.songs) {
-  if(s.isPlaying)
-    return true;
- } 
+   for(Sound const& s : this.songs) {
+    if(s.isPlaying)
+      return true;
+   } 
  
- // if no songs are currently playing
- return false;
+   // if no songs are currently playing
+   return false;
  
+}
+
+void updateSongs() {
+  
+}
+
+void updateSounds() {
+  
 }

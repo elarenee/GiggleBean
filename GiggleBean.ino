@@ -30,18 +30,25 @@
   
   void loop() {
     textile.updateTargetArray(); // read data from input pins on Arduino
-    dj.speaker.updateSoundArray(); // given Target array, 
-    bool songEnded = d.jspeaker.updateSongArray(); 
+    dj.speaker.updateSounds(); // given Target array
+    dj.speaker.updateSongs(); 
 
-    if(textile.allBlinkingTargetsTouched(leds.getCurBlinkCombo()) && !dj.speaker.songPlaying() ) {
-      leds.stopBlinking();
-      dj.determineSong(leds.getCurBlinkCombo());
-      // get the target1index from the LightCombo passed into the function. 
-      // then get the color and pressure reading from TextileSensor class 
-      // (which owns the target array) … 
-      // maybe DJ and TextileSensor should be friends...
+    if(textile.allBlinkingTargetsTouched(leds.getCurBlinkCombo())) {
+      if(!dj.speaker.songPlaying() ) {
+        leds.stopBlinking();
+        dj.determineSong(leds.getCurBlinkCombo());
+        // get the target1index from the LightCombo passed into the function. 
+        // then get the color and pressure reading from TextileSensor class 
+        // (which owns the target array) … 
+        // maybe DJ and TextileSensor should be friends...
+        
+        // and then start playing the new song
       
-      // and then start playing the new song
+      }
+      else {
+        //adjust volume
+      }
+      
       
     }
     dj.determineSound(); // may or may not play a sound depending on whether the textile is being touched somewhere

@@ -31,7 +31,6 @@ class Speaker {
   int convertPressureToVolume(int pressure); 
   void playTrack(int vol, int idx, TrackType trackType);
   bool songPlaying();
-  void updateSounds(Target[] targetArray);
   bool updateSongs(Target[] targetArray);
 
 };

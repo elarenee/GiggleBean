@@ -1,8 +1,8 @@
 #include "track.h"
 
 
-Track::Track(int inDuration)
-  : isPlaying(false), duration(inDuration) {}
+Track::Track()
+  : isPlaying(false), duration(SOUND_DURATION) {}
 
   
 void Track::startTrack() {

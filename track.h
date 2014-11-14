@@ -1,10 +1,13 @@
 #ifndef TRACK_H
 #define TRACK_H
 
+#define const double SOUND_DURATION = 2;
+#include <time.h>
+
 class Track {
  
 public:
-  Track(int duration);
+  Track();
   void startTrack(); // makes isPlaying true, sets start time
   void updateIsPlaying(); // returns if track is still playing and adjusts isPlaying if applicable
 

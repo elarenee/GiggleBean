@@ -28,9 +28,11 @@
   
   }
   
+bool songEnded = false;
+
   void loop() {
-    textile.updateTargetArray(); 
-    dj.speaker.updateSongs(); 
+    textile.updateTargetArray();  
+    dj.speaker.updateSongs(songEnded); 
 
     if(textile.allBlinkingTargetsTouched(leds.getCurBlinkCombo())) {
       if(dj.speaker.songPlaying() ) {
@@ -50,6 +52,7 @@
     
     if(songEnded) {
       leds.shuffleBlinkingLEDs();
+      songEnded = false;
     } 
     
   }

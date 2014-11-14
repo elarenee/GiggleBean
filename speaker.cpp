@@ -25,10 +25,18 @@ bool Speaker::songPlaying() {
  
 }
 
-void updateSongs() {
-  
+void Speaker::updateSongs(Target[] targetArray) {
+    //loop through songs
+    for (int i = 0; i < 3; ++i) {
+        //check the targetArray and update each song accordingly
+        
+    }
 }
 
-void updateSounds() {
-  
+void Speaker::updateSounds(Target[] targetArray) {
+    //loop through sounds
+    for (int i = 0; i < 2; ++i) {
+        //check the targetArray and update each song accordingly
+        
+    }
 }

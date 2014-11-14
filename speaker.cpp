@@ -7,8 +7,8 @@ void Speaker::playTrack (int vol, int idx, TrackType trackType) {
   
 }
 
-void Speaker::setVolume(int pressure) {
-  
+void Speaker::convertPressureToVolume(int pressure) {
+  // somehow convert pressure to an "additional volume" integer
 }
 
 void Speaker::stopPlayingTrack() {

@@ -1,6 +1,8 @@
 #ifndef DJ_H
 #define DJ_H
 
+#include "speaker.h"
+
 #define PRESSURE_MIDLINE 300
 // the PRESSURE_MIDLINE value should be figured out during testing. 
 

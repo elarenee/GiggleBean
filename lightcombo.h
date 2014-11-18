@@ -3,7 +3,7 @@
 
 #include <cstdlib>
 
-enum Color { RED, BLUE, YELLOW};
+enum Color { RED, BLUE, YELLOW };
 
 class LightCombo {
     

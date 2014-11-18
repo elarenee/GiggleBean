@@ -16,7 +16,7 @@
 //    4 (ara height)
 //    6 (dad height)
 
-LEDController::LEDController() {
+/*LEDController::LEDController() {
     //constructor
     // Hard-coded array of possible combinations of targets that can be blinking simultaneously. 
     // We have to hard-code these values because we only want LEDs that are of the same color to be blinking at the same time. NOT complete yet
@@ -36,7 +36,7 @@ LEDController::LEDController() {
                     LightCombo(4,-1,Color.GREEN), 
                     LightCombo(6,-1,Color.GREEN), 
                   };
-}
+}*/
 
 void LEDController::stopBlinking() {
   // make all LEDs steady (no blinking/pulsing anywhere) (directly modifying pin output...ask Matt)

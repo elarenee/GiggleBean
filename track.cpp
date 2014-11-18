@@ -1,12 +1,10 @@
 #include "track.h"
 
-
 Track::Track()
   : isPlaying(false), duration(SOUND_DURATION) {}
 
-  
 void Track::startTrack() {
-  time(startTime);
+  time(&startTime);
   isPlaying = true;
 }
 

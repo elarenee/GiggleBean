@@ -1,7 +1,7 @@
 #ifndef TRACK_H
 #define TRACK_H
 
-#define const double SOUND_DURATION = 2;
+#define SOUND_DURATION 2
 #include <time.h>
 
 class Track {
@@ -14,7 +14,7 @@ public:
 private:
   bool isPlaying;
   time_t startTime; // when the song/sound began playing 
-  int duration; // how long the song/sound will play (in seconds)
+  double duration; // how long the song/sound will play (in seconds)
   
 };
 

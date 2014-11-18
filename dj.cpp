@@ -1,9 +1,6 @@
 #include "dj.h"
-#include "lightcombo.h"
-#include "target.h"
-#include "textilesensor.h"
 
-void DJ::determineSong(LightCombo currBlinkCombo, const Target[] targets) {
+void DJ::determineSong(LightCombo currBlinkCombo, const Target targets[]) {
   
     int target1_idx = currBlinkCombo.target1Index;
     
@@ -11,13 +8,13 @@ void DJ::determineSong(LightCombo currBlinkCombo, const Target[] targets) {
     
     int new_vol = this.speaker.convertPressureToVolume(pressure);
     
-    int itrack_dx = currBlinkCombo.getTrackIndex();
+    int track_idx = currBlinkCombo.getTrackIndex();
     
     this.speaker.playTrack(new_vol, track_idx, TrackType.Song);
     
 }
 
-void DJ::adjustVolume(LightCombo currBlinkCombo) {
+void DJ::adjustVolume(LightCombo currBlinkCombo, const Target targets[]) {
   
     int target1_idx = currBlinkCombo.target1Index;
     
@@ -31,11 +28,11 @@ void DJ::adjustVolume(LightCombo currBlinkCombo) {
     
 }
 
-void DJ::determineSound(const Target[] targets) {
+void DJ::determineSound(const Target targets[]) {
   
     for(int i = 0; i < 8; i++) {
       
-       if(targets[i].touched && !targets[i].isPlaying) {
+       if(targets[i].touched && !targets[i].sounds[0].isPlaying && !targets[i].sounds[1].isPlaying) {
          
           int idx;
           

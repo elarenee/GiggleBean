@@ -1,5 +1,20 @@
 #include "textilesensor.h"
  
+
+TextileSensor::TextileSensor() {
+	/* Fill this in once we know the pin numbers for each target
+	targets = { Target( , ),
+				Target( , ),
+				Target( , ),
+				Target( , ),
+				Target( , ),
+				Target( , ),
+				Target( , ),
+				Target( , )
+				};
+				*/
+} 
+
 // this should update the values within the targets array based upon the data coming from the Arduino input pins
 void TextileSensor::updateTargetArray() {
   

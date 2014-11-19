@@ -2,6 +2,9 @@
 #define DJ_H
 
 #include "speaker.h"
+#include "lightcombo.h"
+#include "target.h"
+#include "textilesensor.h"
 
 #define PRESSURE_MIDLINE 300
 // the PRESSURE_MIDLINE value should be figured out during testing. 
@@ -12,11 +15,11 @@ class DJ {
   Speaker speaker;
   
   //methods:
-  void determineSong(LightCombo currBlinkCombo, const Target[] targets);
+  void determineSong(LightCombo currBlinkCombo, const Target targets[]);
   
-  void determineSound(const Target[] targets);
+  void determineSound(const Target targets[]);
   
-  void DJ::adjustVolume(LightCombo currBlinkCombo);
+  void adjustVolume(LightCombo currBlinkCombo, const Target targets[]);
 
 };
 

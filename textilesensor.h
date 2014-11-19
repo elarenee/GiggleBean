@@ -9,7 +9,7 @@ class TextileSensor { // this class should be friends with LEDController
 friend class DJ;
 
   //attr:
-  Target targets[8] = ; // hard code in and out pins for each of the 8 regions
+  Target targets[8];// = ; // hard code in and out pins for each of the 8 regions
   
 protected:
   //methods:

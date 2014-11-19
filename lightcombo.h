@@ -31,7 +31,7 @@ public:
   // default constructor
   LightCombo();
   
-  //getTrackIndex();
+  int getTrackIndex();
 
 };
 

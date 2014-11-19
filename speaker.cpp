@@ -1,19 +1,5 @@
 #include "speaker.h"
 
-void Track::startTrack() {
-  time(startTime);
-  isPlaying = true;
-}
-
-void Track::updateIsPlaying() {
-  if (isPlaying) {
-    time_t now;
-    time(&now);
-    if (duration <= difftime(now, startTime)) {
-      isPlaying = false;
-    }
-  }
-}
   
 void Speaker::playTrack (int vol, int idx, TrackType trackType) {
   // this function should send these three parameters over bluetooth 
@@ -39,9 +25,9 @@ bool Speaker::songPlaying() {
  
 }
 
-void Speaker::updateSongs() {
+void Speaker::updateSongs(bool& songEnded) {
     //loop through songs
     for (int i = 0; i < 3; ++i) {
-        this.songs[i].updateIsPlaying();
+        this.songs[i].updateIsPlaying(songEnded);
     }
 }

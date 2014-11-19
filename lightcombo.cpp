@@ -14,6 +14,12 @@ LightCombo::LightCombo(LightCombo from) {
 	color = from.color;
 }
 
+// default constructor
+LightCombo::LightCombo() {
+	target1Index = -1;
+	target2Index = -1;
+}
+
 // returns the integer index value associated with the color of this blinkCombo
 int LightCombo::getTrackIndex() {
   return (int)this.color;

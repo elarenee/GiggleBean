@@ -8,6 +8,7 @@ enum Color { RED, BLUE, YELLOW };
 class LightCombo {
     
 public:
+  
   //attr:
 
   // NOTE: These two integers will range from 0-7 because there are 8 possible target regions
@@ -26,8 +27,11 @@ public:
   
   //copy constructor
   LightCombo(const LightCombo& from);
+
+  // default constructor
+  LightCombo();
   
-  getTrackIndex();
+  //getTrackIndex();
 
 };
 

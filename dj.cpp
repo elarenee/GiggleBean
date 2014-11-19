@@ -6,11 +6,11 @@ void DJ::determineSong(LightCombo currBlinkCombo, const Target targets[]) {
     
     double pressure = targets[target1_idx].pressureReading;
     
-    int new_vol = this.speaker.convertPressureToVolume(pressure);
+    int new_vol = speaker.convertPressureToVolume(pressure);
     
     int track_idx = currBlinkCombo.getTrackIndex();
     
-    this.speaker.playTrack(new_vol, track_idx, TrackType.Song);
+    speaker.playTrack(new_vol, track_idx, Song);
     
 }
 
@@ -20,11 +20,11 @@ void DJ::adjustVolume(LightCombo currBlinkCombo, const Target targets[]) {
     
     double pressure = targets[target1_idx].pressureReading;
      
-    int new_vol = this.speaker.convertPressureToVolume(pressure);
+    int new_vol = speaker.convertPressureToVolume(pressure);
     
     //this will send the new volume, but in order to specify that it is just increasing
     // the volume for a second and not restarting a track, the second parameter should be -1
-    this.speaker.playTrack(new_vol, -1, TrackType.Song);
+    speaker.playTrack(new_vol, -1, Song);
     
 }
 
@@ -44,8 +44,8 @@ void DJ::determineSound(const Target targets[]) {
            idx = 2; 
           
           int vol = speaker.defaultVolume; // there should be no volume regulation 
-          this.speaker.PlayTrack(vol, idx, TrackType.Sound);
-          targets[i].startTrack();
+          speaker.playTrack(vol, idx, Sound);
+          targets[i].sounds[idx].startTrack();
           
        }
     }       

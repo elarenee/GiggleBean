@@ -47,7 +47,7 @@ void LEDController::shuffleBlinkingLEDs() {
   
   int rand_idx = rand() % 14;
   LightCombo rand_combo = lightCombos[rand_idx];
-  currentBlinkCombo = new LightCombo(rand_combo);
+  currentBlinkCombo = LightCombo(rand_combo);
   
 }
 
@@ -58,5 +58,5 @@ void LEDController::makeBlink(int index) {
 }
 
 LightCombo LEDController::getCurBlinkCombo() {
-	return this.currentBlinkCombo;
+	return currentBlinkCombo;
 }

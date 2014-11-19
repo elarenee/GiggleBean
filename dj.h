@@ -18,7 +18,7 @@ public:
   //methods:
   void determineSong(LightCombo currBlinkCombo, const Target targets[]);
   
-  void determineSound(const Target targets[]);
+  void determineSound(Target targets[]);
   
   void adjustVolume(LightCombo currBlinkCombo, const Target targets[]);
 

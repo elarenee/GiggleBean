@@ -1,11 +1,18 @@
+#include <DS1307RTC.h>
+
+#include <Wire.h>
+
+#include <Time.h>
+
+
+
 #ifndef TRACK_H
 #define TRACK_H
 
 #define SOUND_DURATION 2
-#include <time.h>
 
 class Track {
- 
+ friend class DJ;
 public:
   Track();
   void startTrack(); // makes isPlaying true, sets start time

@@ -11,7 +11,7 @@ enum TrackType {Sound, Song};
 
 class Speaker {
 
-  friend class DJ;
+  public:
   //attr:
   int defaultVolume; 
   Track sounds[2]; // a hard-coded array of the two possible “sounds”: giggle and bo-ing
@@ -21,7 +21,7 @@ class Speaker {
   int convertPressureToVolume(int pressure); 
   void playTrack(int vol, int idx, TrackType trackType);
   bool songPlaying();
-  bool updateSongs(Target targetArray[]);
+  bool updateSongs(bool& songEnded);
 
 };
 

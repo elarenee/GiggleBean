@@ -1,6 +1,8 @@
 #ifndef TRACK_H
 #define TRACK_H
 
+#include <Arduino.h>
+
 #define SOUND_DURATION 2
 
 class Track {

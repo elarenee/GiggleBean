@@ -17,21 +17,35 @@
    
   void setup() {
     // put your setup code here, to run once:
-    TextileSensor textile;
-    DJ dj;
-    LEDController leds;
-    cs_3_2.set_CS_AutocaL_Millis(0xFFFFFFFF);     // turn off autocalibrate on channel 1 - just as an example
-    cs_24_26.set_CS_AutocaL_Millis(0xFFFFFFFF);
-    cs_8_9.set_CS_AutocaL_Millis(0xFFFFFFFF);
+    
+
     Serial.begin(9600);
-    pinMode(ledPinB, OUTPUT);
-    pinMode(ledPinG, OUTPUT);
-    pinMode(ledPinR, OUTPUT);
+    pinMode(ledPinB1, OUTPUT);
+    pinMode(ledPinB2, OUTPUT);
+    pinMode(ledPinB3, OUTPUT);
+    pinMode(ledPinR1, OUTPUT);
+    pinMode(ledPinR2, OUTPUT);
+    pinMode(ledPinR3, OUTPUT);
+    pinMode(ledPinY1, OUTPUT);
+    pinMode(ledPinY2, OUTPUT);
+
+    pinMode(touchPinB1, INPUT);
+    pinMode(touchPinB2, INPUT);
+    pinMode(touchPinB3, INPUT);
+    pinMode(touchPinR1, INPUT);
+    pinMode(touchPinR2, INPUT);
+    pinMode(touchPinR3, INPUT);
+    pinMode(touchPinY1, INPUT);
+    pinMode(touchPinY2, INPUT);
+    
   
   
   }
   
-bool songEnded = false;
+  bool songEnded = false;
+  TextileSensor textile;
+  DJ dj;
+  LEDController leds;
 
   void loop() {
     textile.updateTargetArray();  
@@ -40,7 +54,7 @@ bool songEnded = false;
     if(textile.allBlinkingTargetsTouched(leds.getCurBlinkCombo())) {
       if(dj.speaker.songPlaying() ) {
         //adjust volume
-        dj.adjustVolume(leds.getCurBlinkCombo());
+        dj.adjustVolume(leds.getCurBlinkCombo(), textile.targets);
       }
       else {
         leds.stopBlinking();
@@ -49,7 +63,7 @@ bool songEnded = false;
     }
     // may or may not play a sound depending on whether the textile is being touched somewhere
     else {
-      dj.determineSound(leds.getCurBlinkCombo());
+      dj.determineSound(textile.targets);
     
     } 
     

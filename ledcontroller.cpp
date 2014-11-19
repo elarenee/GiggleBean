@@ -1,8 +1,6 @@
 #include "ledcontroller.h"
 #include "lightcombo.h"
 
-//methods:
-
 // LIGHT COMBOS: (hard-coded)
 // Blue Targets
 //    0 (ara height)
@@ -16,27 +14,30 @@
 //    4 (ara height)
 //    6 (dad height)
 
-/*LEDController::LEDController() {
+LEDController::LEDController() {
     //constructor
     // Hard-coded array of possible combinations of targets that can be blinking simultaneously. 
     // We have to hard-code these values because we only want LEDs that are of the same color to be blinking at the same time. NOT complete yet
-    lightCombos= {  LightCombo(0,1,Color.BLUE), 
-                    LightCombo(1,5,Color.BLUE), 
-                    LightCombo(0,5,Color.BLUE),
-                    LightCombo(0,-1,Color.BLUE), 
-                    LightCombo(1,-1,Color.BLUE), 
-                    LightCombo(5,-1,Color.BLUE), 
-                    LightCombo(2,3,Color.RED),
-                    LightCombo(3,7,Color.RED), 
-                    LightCombo(2,7,Color.RED), 
-                    LightCombo(2,-1,Color.RED),
-                    LightCombo(3,-1,Color.RED), 
-                    LightCombo(7,-1,Color.RED), 
-                    LightCombo(4,6,Color.GREEN), 
-                    LightCombo(4,-1,Color.GREEN), 
-                    LightCombo(6,-1,Color.GREEN), 
-                  };
-}*/
+    lightCombos[0] = LightCombo(0,1,BLUE); 
+    lightCombos[1] = LightCombo(1,5,BLUE);
+    lightCombos[2] = LightCombo(0,5,BLUE);
+    lightCombos[3] = LightCombo(0,-1,BLUE);
+    lightCombos[4] = LightCombo(1,-1,BLUE);
+    lightCombos[5] = LightCombo(5,-1,BLUE);
+    lightCombos[6] = LightCombo(2,3,RED);
+    lightCombos[7] = LightCombo(3,7,RED);
+    lightCombos[8] = LightCombo(2,7,RED);
+    lightCombos[9] = LightCombo(2,-1,RED);
+    lightCombos[10] = LightCombo(3,-1,RED);
+    lightCombos[11] = LightCombo(7,-1,RED);
+    lightCombos[12] = LightCombo(4,6,YELLOW);
+    lightCombos[13] = LightCombo(4,-1,YELLOW);
+    lightCombos[14] = LightCombo(6,-1,YELLOW);
+
+    currentBlinkCombo = lightCombos[0];
+    shuffleBlinkingLEDs();
+                                
+}
 
 void LEDController::stopBlinking() {
   // make all LEDs steady (no blinking/pulsing anywhere) (directly modifying pin output...ask Matt)
@@ -46,8 +47,8 @@ void LEDController::stopBlinking() {
 void LEDController::shuffleBlinkingLEDs() {
   
   int rand_idx = rand() % 14;
-  LightCombo rand_combo = this.lightCombos[rand_idx];
-  this.currentBlinkCombo = new LightCombo(rand_combo);
+  LightCombo rand_combo = lightCombos[rand_idx];
+  currentBlinkCombo = LightCombo(rand_combo);
   
 }
 

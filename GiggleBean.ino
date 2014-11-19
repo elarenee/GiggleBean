@@ -13,9 +13,7 @@
   CapacitiveSensor   cs_24_26 = CapacitiveSensor(24,26); 
   CapacitiveSensor   cs_8_9 = CapacitiveSensor(8,9); 
   
-  int ledPinB = 8;                                 //Blue LED
-  int ledPinG = 12;                                //Green LED
-  int ledPinR = 11;                                //Red LED
+
    
   void setup() {
     // put your setup code here, to run once:

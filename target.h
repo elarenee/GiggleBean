@@ -5,6 +5,8 @@
 
 struct Target {
 
+  Target()
+  	: ledPin(0), capSensPin(0), pressureReading(0), touched(false) {}
   Target(int inLedPin, int inCapSensPin) 
 	: ledPin(inLedPin), capSensPin(inCapSensPin), pressureReading(0), touched(false) {}
   //attr:

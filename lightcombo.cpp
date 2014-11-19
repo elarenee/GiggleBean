@@ -8,7 +8,7 @@ LightCombo::LightCombo(int a, int b, Color c) {
 }
 
 //copy constructor
-LightCombo::LightCombo(LightCombo from) {
+LightCombo::LightCombo(const LightCombo& from) {
 	target1Index = from.target1Index;
 	target2Index = from.target2Index;
 	color = from.color;
@@ -22,5 +22,5 @@ LightCombo::LightCombo() {
 
 // returns the integer index value associated with the color of this blinkCombo
 int LightCombo::getTrackIndex() {
-  return (int)this.color;
+  return (int)color;
 }

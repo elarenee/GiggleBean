@@ -28,7 +28,7 @@ void DJ::adjustVolume(LightCombo currBlinkCombo, const Target targets[]) {
     
 }
 
-void DJ::determineSound(const Target targets[]) {
+void DJ::determineSound(Target targets[]) {
   
     for(int i = 0; i < 8; i++) {
       

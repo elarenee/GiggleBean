@@ -4,15 +4,15 @@ Track::Track()
   : isPlaying(false), duration(SOUND_DURATION) {}
 
 void Track::startTrack() {
-  time(&startTime);
+  startTime = millis();
   isPlaying = true;
 }
 
 void Track::updateIsPlaying() {
   if (isPlaying) {
-    time_t now;
-    time(&now);
-    if (duration <= difftime(now, startTime)) {
+    unsigned long now = millis();
+    
+    if (duration >= now - startTime) {
       isPlaying = false;
     }
   }

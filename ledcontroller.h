@@ -25,7 +25,7 @@ class LEDController {
   LightCombo lightCombos[15]; // this is the hard-coded array of possible combinations of targets that can be blinking simultaneously.
   // We have to hard-code these values because we only want LEDs that are of the same color to be blinking at the same time.
   // Values initialized in the constructor. 
-                
+
   //methods:
   LEDController();
   void stopBlinking();  

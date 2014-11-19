@@ -18,6 +18,7 @@ LEDController::LEDController() {
     //constructor
     // Hard-coded array of possible combinations of targets that can be blinking simultaneously. 
     // We have to hard-code these values because we only want LEDs that are of the same color to be blinking at the same time. NOT complete yet
+
     lightCombos[0] = LightCombo(0,1,BLUE); 
     lightCombos[1] = LightCombo(1,5,BLUE);
     lightCombos[2] = LightCombo(0,5,BLUE);
@@ -59,5 +60,5 @@ void LEDController::makeBlink(int index) {
 }
 
 LightCombo LEDController::getCurBlinkCombo() {
-	return this.currentBlinkCombo;
+	return currentBlinkCombo;
 }

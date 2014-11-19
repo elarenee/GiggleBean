@@ -11,6 +11,7 @@
 
 class DJ {
 
+public:
   //attr:
   Speaker speaker;
   

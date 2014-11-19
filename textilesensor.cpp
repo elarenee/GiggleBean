@@ -2,17 +2,17 @@
  
 
 TextileSensor::TextileSensor() {
-	/* Fill this in once we know the pin numbers for each target
-	targets = { Target( , ),
-				Target( , ),
-				Target( , ),
-				Target( , ),
-				Target( , ),
-				Target( , ),
-				Target( , ),
-				Target( , )
-				};
-				*/
+	// Fill this in once we know the pin numbers for each target
+  // each target is associated with an output LED pin and an input capacitive sensor pin. 
+	targets[0] = Target( 3, 22);
+  targets[1] = Target( 4, 24);
+  targets[2] = Target( 5, 26);
+  targets[3] = Target( 6, 28);
+  targets[4] = Target( 7, 30);
+  targets[5] = Target( 8, 32);
+  targets[6] = Target( 9, 34);
+  targets[7] = Target( 10, 36);
+			
 } 
 
 // this should update the values within the targets array based upon the data coming from the Arduino input pins

@@ -4,6 +4,8 @@
 #include "target.h"
 #include "lightcombo.h"
 
+static double diff_resistance = 0.1 ;
+
 //Global Pins for Output
 static int ledPinB1 = 3;                                 //Blue LED
 static int ledPinB2 = 4;                                 //Blue LED

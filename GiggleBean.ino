@@ -1,4 +1,3 @@
-#include <CapacitiveSensor.h>
 #include "dj.h"
 #include "lightcombo.h"
 #include "target.h"
@@ -9,11 +8,11 @@
  
 
   // specifying which pins map to which targets on textile
-  CapacitiveSensor   cs_3_2 = CapacitiveSensor(3,2);
+  /*CapacitiveSensor   cs_3_2 = CapacitiveSensor(3,2);
   CapacitiveSensor   cs_24_26 = CapacitiveSensor(24,26); 
   CapacitiveSensor   cs_8_9 = CapacitiveSensor(8,9); 
   
-
+*/
    
   void setup() {
     // put your setup code here, to run once:

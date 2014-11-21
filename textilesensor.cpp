@@ -4,7 +4,7 @@
 TextileSensor::TextileSensor() {
 	// Fill this in once we know the pin numbers for each target
   // each target is associated with an output LED pin and an input capacitive sensor pin. 
-	targets[0] = Target( ledPinB1, touchPinB1);
+	   targets[0] = Target( ledPinB1, touchPinB1);
  	targets[1] = Target( ledPinB2, touchPinB2);
   	targets[2] = Target( ledPinB3, touchPinB3);
  	targets[3] = Target( ledPinR1, touchPinR1);

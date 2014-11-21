@@ -1,5 +1,6 @@
 #include "ledcontroller.h"
 #include "lightcombo.h"
+#include <stdlib.h>
 
 // LIGHT COMBOS: (hard-coded)
 // Blue Targets

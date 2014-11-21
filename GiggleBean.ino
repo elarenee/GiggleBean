@@ -1,3 +1,6 @@
+#include <CapacitiveSensor.h>
+
+#include "CapacitiveSensor.h"
 #include "dj.h"
 #include "lightcombo.h"
 #include "target.h"
@@ -28,17 +31,17 @@
     pinMode(ledPinY1, OUTPUT);
     pinMode(ledPinY2, OUTPUT);
 
-    pinMode(touchPinB1, INPUT);
-    pinMode(touchPinB2, INPUT);
-    pinMode(touchPinB3, INPUT);
-    pinMode(touchPinR1, INPUT);
-    pinMode(touchPinR2, INPUT);
-    pinMode(touchPinR3, INPUT);
-    pinMode(touchPinY1, INPUT);
-    pinMode(touchPinY2, INPUT);
+    pinMode(analogPinB1, INPUT);
+    pinMode(analogPinB2, INPUT);
+    pinMode(analogPinB3, INPUT);
+    pinMode(analogPinR1, INPUT);
+    pinMode(analogPinR2, INPUT);
+    pinMode(analogPinR3, INPUT);
+    pinMode(analogPinY1, INPUT);
+    pinMode(analogPinY2, INPUT);
     
-  
-  
+
+    
   }
   
   bool songEnded = false;

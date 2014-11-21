@@ -1,8 +1,11 @@
+
 #ifndef TEXTILESENSOR_H
 #define TEXTILESENSOR_H
 
 #include "target.h"
 #include "lightcombo.h"
+#include <CapacitiveSensor.h>
+
 
 static double diff_resistance = 0.1 ;
 
@@ -31,24 +34,14 @@ static  int analogPinY1 = 6;								//Yellow Touch
 static  int analogPinY2 = 7;								//Yellow Touch
 
 //Global Pins for Cap Sens Input
-static  int capSensPinB1_1 = 22;								//Blue Touch
-static  int capSensPinB1_2 = 23;								//Blue Touch
-static  int capSensPinB2_1 = 24;								//Blue Touch
-static  int capSensPinB2_2 = 25;								//Blue Touch
-static  int capSensPinB3_1 = 26;								//Blue Touch
-static  int capSensPinB3_2 = 27;								//Blue Touch
-
-static 	int capSensPinR1_1 = 28;								//Red Touch
-static  int capSensPinR1_2 = 29;								//Red Touch
-static 	int capSensPinR2_1 = 30;								//Red Touch
-static  int capSensPinR2_2 = 31;								//Red Touch
-static 	int capSensPinR3_1 = 32;								//Red Touch
-static  int capSensPinR3_2 = 33;								//Red Touch
-
-static  int capSensPinY1_1 = 34;								//Yellow Touch
-static  int capSensPinY1_2 = 35;								//Yellow Touch
-static  int capSensPinY2_1 = 36;								//Yellow Touch
-static  int capSensPinY2_2 = 37;								//Yellow Touch
+static    CapacitiveSensor capSensPinB1 = CapacitiveSensor(22,23);
+static    CapacitiveSensor capSensPinB2 = CapacitiveSensor(24,25);
+static    CapacitiveSensor capSensPinB3 = CapacitiveSensor(26,27);
+static    CapacitiveSensor capSensPinR1 = CapacitiveSensor(28,29);
+static    CapacitiveSensor capSensPinR2 = CapacitiveSensor(30,31);
+static    CapacitiveSensor capSensPinR3 = CapacitiveSensor(32,33);
+static    CapacitiveSensor capSensPinY1 = CapacitiveSensor(34,35);
+static    CapacitiveSensor capSensPinY2 = CapacitiveSensor(36,37);
 
 class TextileSensor { // this class should be friends with LEDController
 

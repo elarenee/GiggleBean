@@ -33,7 +33,7 @@ public:
   void shuffleBlinkingLEDs();
   void makeBlink(int index);
   LightCombo getCurBlinkCombo();
-
+  friend class  TextileSensor;
 };
 
 #endif

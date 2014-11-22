@@ -16,7 +16,7 @@ struct Target {
   int ledPin; // this is the pin number associated with LED output
   int analogPin; // this is the pin number associated with this target region’s analog sensor reading
   CapacitiveSensor capSensPin; // 2 pins for cap sens touch reading (digital), initialized in GiggleBean.ino
-  double resistanceReading; // value retrieved from pin# inPinNum
+  float resistanceReading; // value retrieved from pin# inPinNum
   bool touched;
   bool stretched;
   Track sounds[2];

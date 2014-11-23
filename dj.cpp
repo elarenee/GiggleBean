@@ -10,7 +10,7 @@ void DJ::determineSong(LightCombo currBlinkCombo, const Target targets[]) {
     
     int track_idx = currBlinkCombo.getTrackIndex();
     
-    speaker.playTrack(new_vol, track_idx, Song);
+    speaker.playTrack(Song, track_idx, new_vol);
     
 }
 
@@ -24,29 +24,23 @@ void DJ::adjustVolume(LightCombo currBlinkCombo, const Target targets[]) {
     
     //this will send the new volume, but in order to specify that it is just increasing
     // the volume for a second and not restarting a track, the second parameter should be -1
-    speaker.playTrack(new_vol, -1, Song);
+    speaker.playTrack(Song, -1, new_vol);
     
 }
 
 void DJ::determineSound(Target targets[]) {
-  
+    //we can play at most 1 giggle and 1 bo'ing at a time
     for(int i = 0; i < 8; i++) {
-      
-       if(targets[i].touched && !targets[i].sounds[0].isPlaying && !targets[i].sounds[1].isPlaying) {
-         
-          int idx;
-          
-          // "hard" touch -> bo'ing
-          if(targets[i].resistanceReading >  PRESSURE_MIDLINE) 
-            idx = 1;
-          // "soft" touch -> giggle
-          else             
-           idx = 2; 
-          
-          int vol = speaker.defaultVolume; // there should be no volume regulation 
-          speaker.playTrack(vol, idx, Sound);
-          targets[i].sounds[idx].startTrack();
-          
-       }
+        //play giggle if soft touch
+        if (!speaker.sounds[0].isPlaying && targets[i].touched && !targets[i].stretched) {
+          speaker.playTrack(Sound, 1, speaker.defaultVolume);
+          speaker.sounds[0].startTrack();
+        }
+
+        //play bo'ing if stretch
+        if(!speaker.sounds[1].isPlaying && targets[i].stretched) {
+          speaker.playTrack(Sound, 2, speaker.defaultVolume);
+          speaker.sounds[1].startTrack();
+        }
     }       
 }

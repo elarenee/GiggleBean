@@ -14,14 +14,14 @@ public:
 // Blue Targets
 //    0 (ara height)
 //    1 (ara height)
-//    5 (dad height)
+//    2 (dad height)
 // Red Targets
-//    2 (ara height)
 //    3 (ara height)
-//    7 (dad height)
-// Green Targets
 //    4 (ara height)
-//    6 (dad height)
+//    5 (dad height)
+// Green Targets
+//    6 (ara height)
+//    7 (dad height)
 
   LightCombo lightCombos[15]; // this is the hard-coded array of possible combinations of targets that can be blinking simultaneously.
   // We have to hard-code these values because we only want LEDs that are of the same color to be blinking at the same time.

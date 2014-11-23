@@ -1,0 +1,7 @@
+1. allBlinkingTargetsTouched() is now allBlinkingTargetsStretched()
+	touches on other regions / movement of the whole structure may
+	register as touches on other regions. so to avoid this issue,
+	only play song on hard touches of blinking regions.
+2. sound array now belongs to speaker, instead of each target having its own
+	same issue with that touch nonsense. this way we only play one giggle
+	or bo'ing at a time. won't start again until it is done playing.

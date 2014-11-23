@@ -1,4 +1,3 @@
-#include <CapacitiveSensor.h>
 #include "dj.h"
 #include "lightcombo.h"
 #include "target.h"
@@ -15,8 +14,8 @@
   void setup() {
     // put your setup code here, to run once:
     
-
     Serial.begin(9600);
+    
     pinMode(ledPinB1, OUTPUT);
     pinMode(ledPinB2, OUTPUT);
     pinMode(ledPinB3, OUTPUT);
@@ -35,16 +34,26 @@
     pinMode(analogPinY1, INPUT);
     pinMode(analogPinY2, INPUT);
     
+    pinMode(voltPinB1, OUTPUT);
+    pinMode(voltPinB2, OUTPUT);
+    pinMode(voltPinB3, OUTPUT);
+    pinMode(voltPinR1, OUTPUT);
+    pinMode(voltPinR2, OUTPUT);
+    pinMode(voltPinR3, OUTPUT);  
+    pinMode(voltPinY1, OUTPUT);
+    pinMode(voltPinY2, OUTPUT); 
+   
+   //digital write needed for voltage pins?
   }
   
   
-
   void loop() {
     textile.updateTargetArray(); 
     leds.makeBlink(leds.getCurBlinkCombo().target1Index);
+    //dj.speaker.updateSounds();
     //dj.speaker.updateSongs(songEnded); 
       
-    if(textile.allBlinkingTargetsTouched(leds.getCurBlinkCombo())) {
+    if(textile.allBlinkingTargetsStretched(leds.getCurBlinkCombo())) {
 //      if(dj.speaker.songPlaying() ) {
 //        //adjust volume
 //        dj.adjustVolume(leds.getCurBlinkCombo(), textile.targets);

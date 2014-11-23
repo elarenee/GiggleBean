@@ -1,13 +1,11 @@
-
 #ifndef TEXTILESENSOR_H
 #define TEXTILESENSOR_H
 
 #include "target.h"
 #include "lightcombo.h"
-#include <CapacitiveSensor.h>
 
 
-static double diff_resistance = 0.1 ;
+//static double diff_resistance = 0.1 ;
 
 //Global Pins for Output
 static int ledPinB1 = 3;                                 //Blue LED
@@ -33,15 +31,17 @@ static  int analogPinR3 = 5;								//Red Touch
 static  int analogPinY1 = 6;								//Yellow Touch
 static  int analogPinY2 = 7;								//Yellow Touch
 
-//Global Pins for Cap Sens Input
-static    CapacitiveSensor capSensPinB1 = CapacitiveSensor(22,23);
-static    CapacitiveSensor capSensPinB2 = CapacitiveSensor(26,27);
-static    CapacitiveSensor capSensPinB3 = CapacitiveSensor(30,31);
-static    CapacitiveSensor capSensPinR1 = CapacitiveSensor(34,35);
-static    CapacitiveSensor capSensPinR2 = CapacitiveSensor(38,39);
-static    CapacitiveSensor capSensPinR3 = CapacitiveSensor(42,43);
-static    CapacitiveSensor capSensPinY1 = CapacitiveSensor(46,47);
-static    CapacitiveSensor capSensPinY2 = CapacitiveSensor(50,51);
+//Global Pins that supply voltage for Analog Input
+static  int voltPinB1 = 22;
+static  int voltPinB2 = 23;
+static  int voltPinB3 = 24;
+
+static  int voltPinR1 = 25;
+static  int voltPinR2 = 26;
+static  int voltPinR3 = 27;
+
+static  int voltPinY1 = 28;
+static  int voltPinY2 = 29;
 
 
 class TextileSensor { // this class should be friends with LEDController
@@ -55,7 +55,7 @@ public:
   void updateTargetArray();
   	// this should update the values within the targets array based upon the data coming from the Arduino input pins
   
-  bool allBlinkingTargetsTouched(LightCombo currBlinkCombo);
+  bool allBlinkingTargetsStretched(LightCombo currBlinkCombo);
   friend class LEDController;
 };
 

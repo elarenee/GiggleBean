@@ -22,20 +22,20 @@ LEDController::LEDController() {
     // We have to hard-code these values because we only want LEDs that are of the same color to be blinking at the same time. NOT complete yet
     
     lightCombos[0] = LightCombo(0,1,BLUE); 
-    lightCombos[1] = LightCombo(1,5,BLUE);
-    lightCombos[2] = LightCombo(0,5,BLUE);
+    lightCombos[1] = LightCombo(1,2,BLUE);
+    lightCombos[2] = LightCombo(0,2,BLUE);
     lightCombos[3] = LightCombo(0,-1,BLUE);
     lightCombos[4] = LightCombo(1,-1,BLUE);
-    lightCombos[5] = LightCombo(5,-1,BLUE);
-    lightCombos[6] = LightCombo(2,3,RED);
-    lightCombos[7] = LightCombo(3,7,RED);
-    lightCombos[8] = LightCombo(2,7,RED);
-    lightCombos[9] = LightCombo(2,-1,RED);
-    lightCombos[10] = LightCombo(3,-1,RED);
-    lightCombos[11] = LightCombo(7,-1,RED);
-    lightCombos[12] = LightCombo(4,6,YELLOW);
-    lightCombos[13] = LightCombo(4,-1,YELLOW);
-    lightCombos[14] = LightCombo(6,-1,YELLOW);
+    lightCombos[5] = LightCombo(2,-1,BLUE);
+    lightCombos[6] = LightCombo(3,4,RED);
+    lightCombos[7] = LightCombo(4,5,RED);
+    lightCombos[8] = LightCombo(3,5,RED);
+    lightCombos[9] = LightCombo(3,-1,RED);
+    lightCombos[10] = LightCombo(4,-1,RED);
+    lightCombos[11] = LightCombo(5,-1,RED);
+    lightCombos[12] = LightCombo(6,7,YELLOW);
+    lightCombos[13] = LightCombo(6,-1,YELLOW);
+    lightCombos[14] = LightCombo(7,-1,YELLOW);
 
     currentBlinkCombo = lightCombos[0];
     //shuffleBlinkingLEDs();

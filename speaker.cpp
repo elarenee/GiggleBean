@@ -1,7 +1,7 @@
 #include "speaker.h"
 
   
-void Speaker::playTrack (int vol, int idx, TrackType trackType) {
+void Speaker::playTrack (TrackType trackType, int idx, int vol) {
   // this function should send these three parameters over bluetooth 
   // to the tablet
   
@@ -32,4 +32,9 @@ void Speaker::updateSongs(bool& songEnded) {
         if (songJustEnded)
           songEnded = true;
     }
+}
+
+void Speaker::updateSounds() {
+    sounds[0].updateIsPlaying();
+    sounds[1].updateIsPlaying();
 }

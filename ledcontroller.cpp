@@ -37,7 +37,7 @@ LEDController::LEDController() {
     lightCombos[13] = LightCombo(6,-1,YELLOW);
     lightCombos[14] = LightCombo(7,-1,YELLOW);
 
-    currentBlinkCombo = lightCombos[14];
+    currentBlinkCombo = lightCombos[13];
     //shuffleBlinkingLEDs();
                                 
 }
@@ -52,12 +52,14 @@ void LEDController::stopBlinking() {
   digitalWrite(ledPinR3, HIGH);
   digitalWrite(ledPinY1, HIGH);
   digitalWrite(ledPinY2, HIGH);
+//  delay(3000);
+  shuffleBlinkingLEDs();
 }
 
 void LEDController::shuffleBlinkingLEDs() {
   
   int rand_idx = rand() % 14;
-  LightCombo rand_combo = lightCombos[0];
+  LightCombo rand_combo = lightCombos[13];
   currentBlinkCombo = LightCombo(rand_combo);
 }
 

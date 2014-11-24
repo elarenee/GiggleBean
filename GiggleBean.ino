@@ -10,7 +10,10 @@
   TextileSensor textile;
   DJ dj;
   LEDController leds;
-   
+  char serialMessage[3];
+  char inputChar;
+  int index = 0;
+  
   void setup() {
     // put your setup code here, to run once:
     
@@ -48,6 +51,26 @@
   
   
   void loop() {
+    if (Serial.available()){
+      for (int i = 0;i < 3;i++){
+        inputChar = Serial.read();
+        serialMessage[i] = inputChar;
+        serialMessage[i+1] = '\0';
+      }
+      if (!strcmp(serialMessage, "123")){
+        Serial.println("Turn up volume");
+        memset(serialMessage, -1, sizeof(serialMessage));
+        index = 0;
+      }
+      if (!strcmp(serialMessage, "134")){
+        Serial.println("Turn down volume");
+        memset(serialMessage, -1, sizeof(serialMessage));
+        index = 0;
+      }
+      
+    } else {
+      index = 0;
+    }
     textile.updateTargetArray(); 
     leds.makeBlink(leds.getCurBlinkCombo().target1Index);
     //dj.speaker.updateSounds();

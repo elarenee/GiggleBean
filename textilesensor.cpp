@@ -10,8 +10,8 @@ TextileSensor::TextileSensor() {
  	targets[3] = Target( ledPinR1, analogPinR1, 700, 850); //backwards, steady around 124
   	targets[4] = Target( ledPinR2, analogPinR2, 700, 850); //also backwards, steady around 168 (up to 200s on touch, down to 100ish on push)
   	targets[5] = Target( ledPinR3, analogPinR3, 1, 1); //steady at 1. 0 if touched, 2 if pushed
-  	targets[6] = Target( ledPinY1, analogPinY1, 700, 850);
-  	targets[7] = Target( ledPinY2, analogPinY2, 700, 850);   		
+  	targets[6] = Target( ledPinY1, analogPinY1, 600, 850);
+  	targets[7] = Target( ledPinY2, analogPinY2, 520, 750);   		
 } 
 
 
@@ -21,7 +21,7 @@ void TextileSensor::updateTargetArray() {
   //read resistance from the pins and update resistance & isTouched and isStretched vals
    
   //  iterate through all 8 targets
-  for (int i = 1; i < 8; i++ ) {
+  for (int i = 6; i < 7; i++ ) {
     targets[i].resistanceReading = analogRead(targets[i].analogPin);
 
     //if the resistance is over the high threshold, we have a stretch
@@ -41,7 +41,6 @@ void TextileSensor::updateTargetArray() {
     else {
       targets[i].touched = false;
     }
-
 //FOR TESTING
     //Serial.println(targets[i].touched);
     //Serial.println(targets[i].stretched);
@@ -50,10 +49,9 @@ void TextileSensor::updateTargetArray() {
     String str2 = str1 + i;
     String str3 = str2 + "]: " + targets[i].resistanceReading;
     Serial.println(str3);
-    //delay(100);
   }
+  delay(100);
   Serial.println();
-  //delay(1000);
 }
 //      //digitalWrite(A15, 255);
 //      double temp_resistance = analogRead(targets[i].analogPin);
@@ -92,8 +90,8 @@ void TextileSensor::updateTargetArray() {
 // otherwise return false
 bool TextileSensor::allBlinkingTargetsStretched(LightCombo currBlinkCombo) {
   
-  if(targets[currBlinkCombo.target1Index].stretched && 
-    (currBlinkCombo.target2Index == -1 || targets[currBlinkCombo.target2Index].stretched)) {
+  if(targets[currBlinkCombo.target1Index].touched && 
+    (currBlinkCombo.target2Index == -1 || targets[currBlinkCombo.target2Index].touched)) {
     return true; 
   } else {
     return false;

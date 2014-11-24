@@ -21,6 +21,7 @@ struct Target {
                         //through testing we will hard code a value just above where it drops to on a soft touch.
   int highResistance; //when pushed hard, the resistance rises suddenly for the duration of the push. 
                         //through testing we will hard code a value just below the resistance for "hard pressure."
+  int carryOverResistance;
   bool touched;
   bool stretched;
   Track sounds[2];

@@ -21,7 +21,7 @@ void TextileSensor::updateTargetArray() {
   //read resistance from the pins and update resistance & isTouched and isStretched vals
    
   //  iterate through all 8 targets
-  for (int i = 7; i < 8; i++ ) {
+  for (int i = 1; i < 8; i++ ) {
     targets[i].resistanceReading = analogRead(targets[i].analogPin);
 
     //if the resistance is over the high threshold, we have a stretch
@@ -46,9 +46,14 @@ void TextileSensor::updateTargetArray() {
     //Serial.println(targets[i].touched);
     //Serial.println(targets[i].stretched);
     //Serial.println(i);
-    Serial.println(targets[i].resistanceReading);
-        delay(100);
+    String str1 = "target [";
+    String str2 = str1 + i;
+    String str3 = str2 + "]: " + targets[i].resistanceReading;
+    Serial.println(str3);
+    //delay(100);
   }
+  Serial.println();
+  //delay(1000);
 }
 //      //digitalWrite(A15, 255);
 //      double temp_resistance = analogRead(targets[i].analogPin);

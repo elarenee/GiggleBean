@@ -37,7 +37,7 @@ LEDController::LEDController() {
     lightCombos[13] = LightCombo(6,-1,YELLOW);
     lightCombos[14] = LightCombo(7,-1,YELLOW);
 
-    currentBlinkCombo = lightCombos[0];
+    currentBlinkCombo = lightCombos[14];
     //shuffleBlinkingLEDs();
                                 
 }

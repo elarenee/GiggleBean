@@ -1,10 +1,11 @@
 #include "dj.h"
+#include "target.h"
 
 void DJ::determineSong(LightCombo currBlinkCombo, const Target targets[]) {
   
     int target1_idx = currBlinkCombo.target1Index;
     
-    double pressure = targets[target1_idx].resistanceReading;
+    double pressure = targets[target1_idx].resistanceReadings[sizeMemArray-1];
     
     int new_vol = speaker.convertPressureToVolume(pressure);
     
@@ -18,7 +19,7 @@ void DJ::adjustVolume(LightCombo currBlinkCombo, const Target targets[]) {
   
     int target1_idx = currBlinkCombo.target1Index;
     
-    double pressure = targets[target1_idx].resistanceReading;
+    double pressure = targets[target1_idx].resistanceReadings[sizeMemArray-1];
      
     int new_vol = speaker.convertPressureToVolume(pressure);
     

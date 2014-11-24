@@ -6,6 +6,7 @@
 #include "track.h"
 #include "textilesensor.h"
  
+  int loopsToCalibrate = 3;
   bool songEnded = false;
   TextileSensor textile;
   DJ dj;
@@ -51,51 +52,52 @@
   
   
   void loop() {
-    if (Serial.available()){
-      for (int i = 0;i < 3;i++){
-        inputChar = Serial.read();
-        serialMessage[i] = inputChar;
-        serialMessage[i+1] = '\0';
-      }
-      if (!strcmp(serialMessage, "123")){
-        Serial.println("Turn up volume");
-        memset(serialMessage, -1, sizeof(serialMessage));
+    if (textile.calibrated(loopsToCalibrate)) {
+      if (Serial.available()){
+        for (int i = 0;i < 3;i++){
+          inputChar = Serial.read();
+          serialMessage[i] = inputChar;
+          serialMessage[i+1] = '\0';
+        }
+        if (!strcmp(serialMessage, "123")){
+          Serial.println("Turn up volume");
+          memset(serialMessage, -1, sizeof(serialMessage));
+          index = 0;
+        }
+        if (!strcmp(serialMessage, "134")){
+          Serial.println("Turn down volume");
+          memset(serialMessage, -1, sizeof(serialMessage));
+          index = 0;
+        }
+        
+      } else {
         index = 0;
       }
-      if (!strcmp(serialMessage, "134")){
-        Serial.println("Turn down volume");
-        memset(serialMessage, -1, sizeof(serialMessage));
-        index = 0;
+      textile.updateTargetArray(); 
+      leds.makeBlink(leds.getCurBlinkCombo().target1Index);
+      //dj.speaker.updateSounds();
+      //dj.speaker.updateSongs(songEnded); 
+        
+      if(textile.allBlinkingTargetsStretched(leds.getCurBlinkCombo())) {
+  //      if(dj.speaker.songPlaying() ) {
+  //        //adjust volume
+  //        dj.adjustVolume(leds.getCurBlinkCombo(), textile.targets);
+  //      }
+  //      else {
+          leds.stopBlinking();
+  //        dj.determineSong(leds.getCurBlinkCombo(), textile.targets);
+  //      } 
       }
       
-    } else {
-      index = 0;
+  //    // may or may not play a sound depending on whether the textile is being touched somewhere
+  //    else {
+  //      dj.determineSound(textile.targets);
+  //    
+  //    } 
+  //    
+  //    if(songEnded) {
+  //      leds.shuffleBlinkingLEDs();
+  //      songEnded = false;
+  //    } 
     }
-    textile.updateTargetArray(); 
-    leds.makeBlink(leds.getCurBlinkCombo().target1Index);
-    //dj.speaker.updateSounds();
-    //dj.speaker.updateSongs(songEnded); 
-      
-    if(textile.allBlinkingTargetsStretched(leds.getCurBlinkCombo())) {
-//      if(dj.speaker.songPlaying() ) {
-//        //adjust volume
-//        dj.adjustVolume(leds.getCurBlinkCombo(), textile.targets);
-//      }
-//      else {
-        leds.stopBlinking();
-//        dj.determineSong(leds.getCurBlinkCombo(), textile.targets);
-//      } 
-    }
-    
-//    // may or may not play a sound depending on whether the textile is being touched somewhere
-//    else {
-//      dj.determineSound(textile.targets);
-//    
-//    } 
-//    
-//    if(songEnded) {
-//      leds.shuffleBlinkingLEDs();
-//      songEnded = false;
-//    } 
-    
   }

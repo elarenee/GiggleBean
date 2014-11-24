@@ -52,6 +52,7 @@ public:
   
   //methods:
   TextileSensor();
+  bool calibrated(int& loops);
   void updateTargetArray();
   	// this should update the values within the targets array based upon the data coming from the Arduino input pins
   

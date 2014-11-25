@@ -32,7 +32,7 @@ static  int analogPinY1 = 6;								//Yellow Touch
 static  int analogPinY2 = 7;								//Yellow Touch
 
 //Global Pins that supply voltage for Analog Input
-static  int voltPinB1 = 22;
+//static  int voltPinB1 = 22;
 static  int voltPinB2 = 23;
 static  int voltPinB3 = 24;
 

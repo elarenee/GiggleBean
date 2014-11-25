@@ -38,14 +38,14 @@
     pinMode(analogPinY1, INPUT);
     pinMode(analogPinY2, INPUT);
     
-    pinMode(voltPinB1, OUTPUT);
-    pinMode(voltPinB2, OUTPUT);
-    pinMode(voltPinB3, OUTPUT);
-    pinMode(voltPinR1, OUTPUT);
-    pinMode(voltPinR2, OUTPUT);
-    pinMode(voltPinR3, OUTPUT);  
-    pinMode(voltPinY1, OUTPUT);
-    pinMode(voltPinY2, OUTPUT); 
+//    pinMode(voltPinB1, OUTPUT);
+//    pinMode(voltPinB2, OUTPUT);
+//    pinMode(voltPinB3, OUTPUT);
+//    pinMode(voltPinR1, OUTPUT);
+//    pinMode(voltPinR2, OUTPUT);
+//    pinMode(voltPinR3, OUTPUT);  
+//    pinMode(voltPinY1, OUTPUT);
+//    pinMode(voltPinY2, OUTPUT); 
    
    //digital write needed for voltage pins?
   }
@@ -89,6 +89,7 @@
   //      } 
       }
       
+<<<<<<< Updated upstream
   //    // may or may not play a sound depending on whether the textile is being touched somewhere
   //    else {
   //      dj.determineSound(textile.targets);
@@ -100,4 +101,35 @@
   //      songEnded = false;
   //    } 
     }
+=======
+    } else {
+      index = 0;
+    }
+    textile.updateTargetArray(); 
+    //dj.speaker.updateSounds();
+    //dj.speaker.updateSongs(songEnded); 
+     leds.stopBlinking();  
+    if(textile.allBlinkingTargetsStretched(leds.getCurBlinkCombo())) {
+//      if(dj.speaker.songPlaying() ) {
+//        //adjust volume
+//        dj.adjustVolume(leds.getCurBlinkCombo(), textile.targets);
+//      }
+//      else {
+        leds.stopBlinking();
+//        dj.determineSong(leds.getCurBlinkCombo(), textile.targets);
+//      } 
+    }
+    //leds.stopBlinking();
+//    // may or may not play a sound depending on whether the textile is being touched somewhere
+//    else {
+//      dj.determineSound(textile.targets);
+//    
+//    } 
+//    
+//    if(songEnded) {
+//      leds.shuffleBlinkingLEDs();
+//      songEnded = false;
+//    } 
+    
+>>>>>>> Stashed changes
   }

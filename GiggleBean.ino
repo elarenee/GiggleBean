@@ -6,7 +6,6 @@
 #include "track.h"
 #include "textilesensor.h"
  
-  int loopsToCalibrate = 3;
   bool songEnded = false;
   TextileSensor textile;
   DJ dj;
@@ -38,77 +37,45 @@
     pinMode(analogPinY1, INPUT);
     pinMode(analogPinY2, INPUT);
     
-//    pinMode(voltPinB1, OUTPUT);
-//    pinMode(voltPinB2, OUTPUT);
-//    pinMode(voltPinB3, OUTPUT);
-//    pinMode(voltPinR1, OUTPUT);
-//    pinMode(voltPinR2, OUTPUT);
-//    pinMode(voltPinR3, OUTPUT);  
-//    pinMode(voltPinY1, OUTPUT);
-//    pinMode(voltPinY2, OUTPUT); 
+    pinMode(voltPinB1, OUTPUT);
+    pinMode(voltPinB2, OUTPUT);
+    pinMode(voltPinB3, OUTPUT);
+    pinMode(voltPinR1, OUTPUT);
+    pinMode(voltPinR2, OUTPUT);
+    pinMode(voltPinR3, OUTPUT);  
+    pinMode(voltPinY1, OUTPUT);
+    pinMode(voltPinY2, OUTPUT); 
    
    //digital write needed for voltage pins?
   }
   
   
   void loop() {
-    if (textile.calibrated(loopsToCalibrate)) {
-      if (Serial.available()){
-        for (int i = 0;i < 3;i++){
-          inputChar = Serial.read();
-          serialMessage[i] = inputChar;
-          serialMessage[i+1] = '\0';
-        }
-        if (!strcmp(serialMessage, "123")){
-          Serial.println("Turn up volume");
-          memset(serialMessage, -1, sizeof(serialMessage));
-          index = 0;
-        }
-        if (!strcmp(serialMessage, "134")){
-          Serial.println("Turn down volume");
-          memset(serialMessage, -1, sizeof(serialMessage));
-          index = 0;
-        }
-        
-      } else {
+    if (Serial.available()){
+      for (int i = 0;i < 3;i++){
+        inputChar = Serial.read();
+        serialMessage[i] = inputChar;
+        serialMessage[i+1] = '\0';
+      }
+      if (!strcmp(serialMessage, "123")){
+        Serial.println("Turn up volume");
+        memset(serialMessage, -1, sizeof(serialMessage));
         index = 0;
       }
-      textile.updateTargetArray(); 
-      leds.makeBlink(leds.getCurBlinkCombo().target1Index);
-      //dj.speaker.updateSounds();
-      //dj.speaker.updateSongs(songEnded); 
-        
-      if(textile.allBlinkingTargetsStretched(leds.getCurBlinkCombo())) {
-  //      if(dj.speaker.songPlaying() ) {
-  //        //adjust volume
-  //        dj.adjustVolume(leds.getCurBlinkCombo(), textile.targets);
-  //      }
-  //      else {
-          leds.stopBlinking();
-  //        dj.determineSong(leds.getCurBlinkCombo(), textile.targets);
-  //      } 
+      if (!strcmp(serialMessage, "134")){
+        Serial.println("Turn down volume");
+        memset(serialMessage, -1, sizeof(serialMessage));
+        index = 0;
       }
       
-<<<<<<< Updated upstream
-  //    // may or may not play a sound depending on whether the textile is being touched somewhere
-  //    else {
-  //      dj.determineSound(textile.targets);
-  //    
-  //    } 
-  //    
-  //    if(songEnded) {
-  //      leds.shuffleBlinkingLEDs();
-  //      songEnded = false;
-  //    } 
-    }
-=======
     } else {
       index = 0;
     }
     textile.updateTargetArray(); 
+    leds.makeBlink(leds.getCurBlinkCombo().target1Index);
     //dj.speaker.updateSounds();
     //dj.speaker.updateSongs(songEnded); 
-     leds.stopBlinking();  
+      
     if(textile.allBlinkingTargetsStretched(leds.getCurBlinkCombo())) {
 //      if(dj.speaker.songPlaying() ) {
 //        //adjust volume
@@ -119,7 +86,7 @@
 //        dj.determineSong(leds.getCurBlinkCombo(), textile.targets);
 //      } 
     }
-    //leds.stopBlinking();
+    
 //    // may or may not play a sound depending on whether the textile is being touched somewhere
 //    else {
 //      dj.determineSound(textile.targets);
@@ -131,5 +98,4 @@
 //      songEnded = false;
 //    } 
     
->>>>>>> Stashed changes
   }

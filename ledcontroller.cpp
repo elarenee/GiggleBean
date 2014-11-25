@@ -37,7 +37,7 @@ LEDController::LEDController() {
     lightCombos[13] = LightCombo(6,-1,YELLOW);
     lightCombos[14] = LightCombo(7,-1,YELLOW);
 
-    currentBlinkCombo = lightCombos[0];
+    currentBlinkCombo = lightCombos[13];
     //shuffleBlinkingLEDs();
                                 
 }
@@ -46,21 +46,23 @@ void LEDController::stopBlinking() {
   // make all LEDs steady (no blinking/pulsing anywhere) (directly modifying pin output...ask Matt)
   digitalWrite(ledPinB1, HIGH);
   digitalWrite(ledPinB2, HIGH);
-  digitalWrite(ledPinB3, HIGH);
+  digitalWrite(ledPinB2, HIGH);
   digitalWrite(ledPinR1, HIGH);
   digitalWrite(ledPinR2, HIGH);
   digitalWrite(ledPinR3, HIGH);
   digitalWrite(ledPinY1, HIGH);
   digitalWrite(ledPinY2, HIGH);
+//  delay(3000);
   shuffleBlinkingLEDs();
 }
 
 void LEDController::shuffleBlinkingLEDs() {
   
   int rand_idx = rand() % 14;
-  LightCombo rand_combo = lightCombos[rand_idx];
+  LightCombo rand_combo = lightCombos[13];
   currentBlinkCombo = LightCombo(rand_combo);
 }
+
 void LEDController::makeBlink(int index) {
   // make the specified target region blink (needs to access the targets[] array within TextileSensor)
   // directly modify the pin associated with that target (ask Matt)

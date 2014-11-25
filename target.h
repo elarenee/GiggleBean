@@ -5,32 +5,22 @@
 #include "track.h"
 #include <CapacitiveSensor.h>
 
-static const int defaultHighResInterval = 60;
-static const int defaultLowResInterval = 60;
-
-//we store the past N values for resistance reading
-//once this is full, we do some logic
-//then we start over at the beginning of the array
-static const int sizeMemArray = 3;
-static int memArrayIndex = 0;
 
 struct Target {
 
   Target()
-  	: ledPin(0), analogPin(0), lowResInterval(defaultLowResInterval),
-          highResInterval(defaultHighResInterval), touched(false), stretched(false), baselineRes(700) {}
+  	: ledPin(0), analogPin(0), resistanceReading(0), touched(false), stretched(false) {}
   Target(int inLedPin, int inAnalogPin, int inLowRes, int inHighRes) 
-	: ledPin(inLedPin), analogPin(inAnalogPin), lowResInterval(inLowRes),
-          highResInterval(inHighRes), touched(false), stretched(false), baselineRes(700) {}
+	: ledPin(inLedPin), analogPin(inAnalogPin), resistanceReading(0), lowResistance(inLowRes),
+          highResistance(inHighRes), touched(false), stretched(false) {}
   //attr:
   int ledPin; // this is the pin number associated with LED output
   int analogPin; // this is the pin number associated with this target region’s analog sensor reading
-  int resistanceReadings[sizeMemArray]; // values retrieved from analog read
-  int baselineRes; //both constructors will set this to 700, but we will calibrate right at the beginning and throughout
-  int lowResInterval; //when softly touched, the resistance drops suddenly for about one loop. 
-                        //through testing we will hard code a value just lower than how much it drops to on a soft touch.
-  int highResInterval; //when pushed hard, the resistance rises suddenly for the duration of the push. 
-                        //through testing we will hard code a value just lower than how much it jumps for "hard pressure."
+  int resistanceReading; // value retrieved from analog read
+  int lowResistance; //when softly touched, the resistance drops suddenly for about one loop. 
+                        //through testing we will hard code a value just above where it drops to on a soft touch.
+  int highResistance; //when pushed hard, the resistance rises suddenly for the duration of the push. 
+                        //through testing we will hard code a value just below the resistance for "hard pressure."
   int carryOverResistance;
   bool touched;
   bool stretched;

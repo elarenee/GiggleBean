@@ -36,41 +36,58 @@ LEDController::LEDController() {
     lightCombos[12] = LightCombo(6,7,YELLOW);
     lightCombos[13] = LightCombo(6,-1,YELLOW);
     lightCombos[14] = LightCombo(7,-1,YELLOW);
-
-    currentBlinkCombo = lightCombos[13];
+    
+    currentBlinkCombo = lightCombos[0];
     //shuffleBlinkingLEDs();
                                 
 }
 
 void LEDController::stopBlinking() {
   // make all LEDs steady (no blinking/pulsing anywhere) (directly modifying pin output...ask Matt)
-  digitalWrite(ledPinB1, HIGH);
-  digitalWrite(ledPinB2, HIGH);
-  digitalWrite(ledPinB2, HIGH);
-  digitalWrite(ledPinR1, HIGH);
-  digitalWrite(ledPinR2, HIGH);
-  digitalWrite(ledPinR3, HIGH);
-  digitalWrite(ledPinY1, HIGH);
-  digitalWrite(ledPinY2, HIGH);
-//  delay(3000);
-  shuffleBlinkingLEDs();
+  if (lightModeOn){
+    digitalWrite(ledPinB1, HIGH);
+    digitalWrite(ledPinB2, HIGH);
+    digitalWrite(ledPinB3, HIGH);
+    digitalWrite(ledPinR1, HIGH);
+    digitalWrite(ledPinR2, HIGH);
+    digitalWrite(ledPinR3, HIGH);
+    digitalWrite(ledPinY1, HIGH);
+    digitalWrite(ledPinY2, HIGH);
+  } else {
+    digitalWrite(ledPinB1, LOW);
+    digitalWrite(ledPinB2, LOW);
+    digitalWrite(ledPinB3, LOW);
+    digitalWrite(ledPinR1, LOW);
+    digitalWrite(ledPinR2, LOW);
+    digitalWrite(ledPinR3, LOW);
+    digitalWrite(ledPinY1, LOW);
+    digitalWrite(ledPinY2, LOW);
+  }
+ // shuffleBlinkingLEDs();
 }
 
 void LEDController::shuffleBlinkingLEDs() {
   
   int rand_idx = rand() % 14;
-  LightCombo rand_combo = lightCombos[13];
+  LightCombo rand_combo = lightCombos[rand_idx];
   currentBlinkCombo = LightCombo(rand_combo);
 }
 
-void LEDController::makeBlink(int index) {
+void LEDController::makeBlink(int index1, int index2) {
   // make the specified target region blink (needs to access the targets[] array within TextileSensor)
   // directly modify the pin associated with that target (ask Matt)
-  
-  digitalWrite(TextileSensor().targets[index].ledPin, HIGH);
-  delay(100);
-  digitalWrite(TextileSensor().targets[index].ledPin, LOW);
-  delay(100); 
+  if (lightModeOn) {
+    digitalWrite(TextileSensor().targets[index1].ledPin, HIGH);
+    if (index2 > -1){
+      digitalWrite(TextileSensor().targets[index2].ledPin, HIGH);
+    }
+    delay(100);
+    digitalWrite(TextileSensor().targets[index1].ledPin, LOW);
+    if (index2 > -1){
+      digitalWrite(TextileSensor().targets[index2].ledPin, LOW);
+    }
+   delay(100); 
+  }
 }
 
 LightCombo LEDController::getCurBlinkCombo() {

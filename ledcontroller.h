@@ -8,7 +8,7 @@ class LEDController {
 public:
   //attr:
   LightCombo currentBlinkCombo; // this is the current combination of targets that are currently blinking on the bean. it is set and reset by this class’s shuffleBlink() method
-  
+  bool lightModeOn;
   
 // LIGHT COMBOS: (hard-coded)
 // Blue Targets
@@ -31,7 +31,7 @@ public:
   LEDController();
   void stopBlinking();  
   void shuffleBlinkingLEDs();
-  void makeBlink(int index);
+  void makeBlink(int index1, int index2);
   LightCombo getCurBlinkCombo();
   friend class  TextileSensor;
 };

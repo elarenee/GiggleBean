@@ -4,12 +4,12 @@
 TextileSensor::TextileSensor() {
         // each target is associated with an output LED pin and an input analog pin. 
         // TO DO: find low and high resistance defaults for each target
-	targets[0] = Target( ledPinB1, analogPinB1, 700, 850);
- 	targets[1] = Target( ledPinB2, analogPinB2, 620, 750);
+	targets[0] = Target( ledPinB1, analogPinB1, 700, 800);
+ 	targets[1] = Target( ledPinB2, analogPinB2, 620, 700);
  	targets[2] = Target( ledPinB3, analogPinB3, 700, 850);
  	targets[3] = Target( ledPinR1, analogPinR1, 700, 850); //backwards, steady around 124
-  	targets[4] = Target( ledPinR2, analogPinR2, 700, 850); //also backwards, steady around 168 (up to 200s on touch, down to 100ish on push)
-  	targets[5] = Target( ledPinR3, analogPinR3, 1, 1); //steady at 1. 0 if touched, 2 if pushed
+  	targets[4] = Target( ledPinR2, analogPinR2, 600, 700); //also backwards, steady around 168 (up to 200s on touch, down to 100ish on push)
+  	targets[5] = Target( ledPinR3, analogPinR3, 600, 700); //steady at 1. 0 if touched, 2 if pushed
   	targets[6] = Target( ledPinY1, analogPinY1, 600, 850);
   	targets[7] = Target( ledPinY2, analogPinY2, 520, 750);   		
 } 
@@ -21,7 +21,7 @@ void TextileSensor::updateTargetArray() {
   //read resistance from the pins and update resistance & isTouched and isStretched vals
    
   //  iterate through all 8 targets
-  for (int i = 6; i < 7; i++ ) {
+  for (int i = 0; i < 8; i++ ) {
     targets[i].resistanceReading = analogRead(targets[i].analogPin);
 
     //if the resistance is over the high threshold, we have a stretch
@@ -41,17 +41,8 @@ void TextileSensor::updateTargetArray() {
     else {
       targets[i].touched = false;
     }
-//FOR TESTING
-    //Serial.println(targets[i].touched);
-    //Serial.println(targets[i].stretched);
-    //Serial.println(i);
-    String str1 = "target [";
-    String str2 = str1 + i;
-    String str3 = str2 + "]: " + targets[i].resistanceReading;
-    Serial.println(str3);
   }
-  delay(100);
-  Serial.println();
+  delay(200);
 }
 //      //digitalWrite(A15, 255);
 //      double temp_resistance = analogRead(targets[i].analogPin);

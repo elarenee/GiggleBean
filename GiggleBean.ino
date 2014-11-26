@@ -1,4 +1,4 @@
-#include "dj.h"
+  #include "dj.h"
 #include "lightcombo.h"
 #include "target.h"
 #include "ledcontroller.h"
@@ -14,8 +14,10 @@
   char inputChar;
   int index = 0;
   
+  
   void setup() {
     // put your setup code here, to run once:
+    leds.lightModeOn = true;
     
     Serial.begin(9600);
     
@@ -50,48 +52,47 @@
   }
   
   
-  void loop() {
+void loop() {
     if (Serial.available()){
       for (int i = 0;i < 3;i++){
         inputChar = Serial.read();
         serialMessage[i] = inputChar;
         serialMessage[i+1] = '\0';
       }
-      if (!strcmp(serialMessage, "123")){
-        Serial.println("Turn up volume");
+      if (!strcmp(serialMessage, "000")){
+        leds.lightModeOn = !leds.lightModeOn;
         memset(serialMessage, -1, sizeof(serialMessage));
         index = 0;
-      }
-      if (!strcmp(serialMessage, "134")){
-        Serial.println("Turn down volume");
-        memset(serialMessage, -1, sizeof(serialMessage));
-        index = 0;
-      }
-      
+      } 
     } else {
       index = 0;
     }
+    
+    leds.stopBlinking();
     textile.updateTargetArray(); 
-    leds.makeBlink(leds.getCurBlinkCombo().target1Index);
-    //dj.speaker.updateSounds();
+    leds.makeBlink(leds.getCurBlinkCombo().target1Index, leds.getCurBlinkCombo().target2Index);
+    dj.speaker.updateSounds();
     //dj.speaker.updateSongs(songEnded); 
       
     if(textile.allBlinkingTargetsStretched(leds.getCurBlinkCombo())) {
-//      if(dj.speaker.songPlaying() ) {
+//      if(dj.speaker.songPlaying() ) {999
+
 //        //adjust volume
 //        dj.adjustVolume(leds.getCurBlinkCombo(), textile.targets);
 //      }
 //      else {
         leds.stopBlinking();
-//        dj.determineSong(leds.getCurBlinkCombo(), textile.targets);
+        delay(5000);
+        leds.shuffleBlinkingLEDs();
+        dj.determineSong(leds.getCurBlinkCombo(), textile.targets);
 //      } 
     }
     
 //    // may or may not play a sound depending on whether the textile is being touched somewhere
-//    else {
-//      dj.determineSound(textile.targets);
+    else {
+      dj.determineSound(textile.targets);
 //    
-//    } 
+    } 
 //    
 //    if(songEnded) {
 //      leds.shuffleBlinkingLEDs();
@@ -99,3 +100,4 @@
 //    } 
     
   }
+  

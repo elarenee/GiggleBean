@@ -60,6 +60,7 @@ bool TextileSensor::calibrated(int& loopsLeft, const int totalLoops) {
 void recalibrateTarget(Target& t) {
 
   // recalibrate this target's baseLineRes here
+  t.baselineRes = 0;
   for (int j = 0; j < sizeMemArray; ++j) {
     t.baselineRes += t.resistanceReadings[j];
   }
@@ -69,7 +70,7 @@ void recalibrateTarget(Target& t) {
 
 // this should update the values within the targets array based upon the data coming from the Arduino input pins
 // returns false if the values have to be recalibrated; true otherwise
-bool TextileSensor::updateTargetArray() {
+void TextileSensor::updateTargetArray() {
   
   //read resistance from the pins and update resistance & isTouched and isStretched vals
       //    String s = "memArrayIndex: ";
@@ -83,15 +84,13 @@ bool TextileSensor::updateTargetArray() {
         double res = analogRead(targets[i].analogPin);
 
         // if target is reading in weird values <= 10
-        if(res <= 10) {
+        /*if(res <= 10) {
           // want to pause here and ask the user to shake the structure so that everything can be recalibrated.
           // maybe flash all the lights or play a quick mp3 that says "Shake me!"
           Serial.println("SHAKE ME!");
           delay(5000);
-          //recalibrateTarget(targets[i]);
-        } 
-        else
-          targets[i].resistanceReadings[memArrayIndex] = analogRead(targets[i].analogPin);
+        } */
+        targets[i].resistanceReadings[memArrayIndex] = analogRead(targets[i].analogPin);
       }
       memArrayIndex++;
     }
@@ -100,12 +99,12 @@ bool TextileSensor::updateTargetArray() {
       for (int i = 0; i < 8; i++ ) {
 
 
-    Serial.println(targets[i].baselineRes);
-    String str1 = "target [";
-    String str2 = str1 + i;
-    int x =targets[i].resistanceReadings[0]-targets[i].baselineRes;
-    String str3 = str2 + "]: " + x;
-    Serial.println(str3);
+        // Serial.println(targets[i].baselineRes);
+        // String str1 = "target [";
+        // String str2 = str1 + i;
+        // int x =targets[i].resistanceReadings[0]-targets[i].baselineRes;
+        // String str3 = str2 + "]: " + x;
+        // Serial.println(str3);
 
 
         targets[i].stretched = false;
@@ -115,6 +114,7 @@ bool TextileSensor::updateTargetArray() {
         {
           if (targets[i].resistanceReadings[j] - targets[i].baselineRes > targets[i].highResInterval) {
             targets[i].stretched = true;
+            targets[i].cyclesTouched = 0;
             targets[i].cyclesStretched++;
             targets[i].cyclesSinceRelease = 0;
             // s = "target ";
@@ -130,6 +130,7 @@ bool TextileSensor::updateTargetArray() {
           {
             if (targets[i].baselineRes - targets[i].resistanceReadings[j] > targets[i].lowResInterval) {
               targets[i].touched = true;
+              targets[i].cyclesStretched = 0;
               targets[i].cyclesTouched++;
               targets[i].cyclesSinceRelease = 0;
 
@@ -141,13 +142,7 @@ bool TextileSensor::updateTargetArray() {
         if (!targets[i].touched && !targets[i].stretched) {
           targets[i].cyclesTouched = targets[i].cyclesStretched = 0;
           if (targets[i].cyclesSinceRelease++ > 20) {
-
-            targets[i].baselineRes = 0;
-            for (int j = 0; j < sizeMemArray; ++j)
-            {
-              targets[i].baselineRes += targets[i].resistanceReadings[j];
-            }
-            targets[i].baselineRes /= sizeMemArray;
+            recalibrateTarget(targets[i]);
           }
         }
 
@@ -156,8 +151,9 @@ bool TextileSensor::updateTargetArray() {
 
           recalibrateTarget(targets[i]);
           targets[i].cyclesTouched = targets[i].cyclesStretched = 0;
-          
         }
+
+
         
         //FOR TESTING
     //Serial.println(targets[i].touched);
@@ -175,7 +171,7 @@ bool TextileSensor::updateTargetArray() {
   
 
  // delay(500);
-  Serial.println();
+ // Serial.println();
 
 }
 //      //digitalWrite(A15, 255);

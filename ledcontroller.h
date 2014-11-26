@@ -29,9 +29,10 @@ public:
 
   //methods:
   LEDController();
+  void turnLightsOff();
   void stopBlinking();  
   void shuffleBlinkingLEDs();
-  void makeBlink(int index);
+  void makeBlink();
   LightCombo getCurBlinkCombo();
   friend class  TextileSensor;
 };

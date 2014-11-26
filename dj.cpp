@@ -1,6 +1,8 @@
 #include "dj.h"
 #include "target.h"
 
+
+
 void DJ::determineSong(LightCombo currBlinkCombo, const Target targets[]) {
   
     int target1_idx = currBlinkCombo.target1Index;
@@ -12,6 +14,8 @@ void DJ::determineSong(LightCombo currBlinkCombo, const Target targets[]) {
     int track_idx = currBlinkCombo.getTrackIndex();
     
     speaker.playTrack(Song, track_idx, new_vol);
+
+    speaker.songs[track_idx].startTrack();
     
 }
 

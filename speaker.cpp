@@ -1,9 +1,22 @@
 #include "speaker.h"
 
+
+Speaker::Speaker() {
+
+  defaultVolume = 100;
+  songs[0] = Track(10);
+  songs[1] = Track(16.5);
+  songs[2] = Track(15);
+  
+  sounds[0] = Track(SOUND_DURATION);
+  sounds[1] = Track(SOUND_DURATION);
+
+}
   
 void Speaker::playTrack (TrackType trackType, int idx, int vol) {
   // this function should send these three parameters over bluetooth 
   // to the tablet
+  Serial.println("sending playTrack data to Android");
   
 }
 
@@ -27,7 +40,8 @@ bool Speaker::songPlaying() {
 void Speaker::updateSongs(bool& songEnded) {
     //loop through songs
     bool songJustEnded = false;
-    for (int i = 0; i < 3; ++i) {
+    for (int i = 0; i < 3; ++i) {  Serial.println("about to call update is playing for the song");
+
         songJustEnded = songs[i].updateIsPlaying();
         if (songJustEnded)
           songEnded = true;

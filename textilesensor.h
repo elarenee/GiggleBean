@@ -8,12 +8,12 @@
 //static double diff_resistance = 0.1 ;
 
 //Global Pins for Output
-static int ledPinB1 = 3;                                 //Blue LED
-static int ledPinB2 = 4;                                 //Blue LED
-static int ledPinB3 = 5;                                 //Blue LED
+static int ledPinB1 = 46;                                 //Blue LED
+static int ledPinB2 = 13;                                 //Blue LED
+static int ledPinB3 = 44;                                 //Blue LED
 
-static  int ledPinR1 = 6;                              	//Red LED
-static  int ledPinR2 = 7;                               //Red LED
+static  int ledPinR1 = 12;                              //Red LED
+static  int ledPinR2 = 11;                               //Red LED
 static  int ledPinR3 = 8;                               //Red LED
 
 static  int ledPinY1 = 9;                              	//Yellow LED
@@ -33,15 +33,15 @@ static  int analogPinY2 = 7;								//Yellow Touch
 
 //Global Pins that supply voltage for Analog Input
 static  int voltPinB1 = 22;
-static  int voltPinB2 = 23;
-static  int voltPinB3 = 24;
-
-static  int voltPinR1 = 25;
-static  int voltPinR2 = 26;
-static  int voltPinR3 = 27;
-
-static  int voltPinY1 = 28;
-static  int voltPinY2 = 29;
+//static  int voltPinB2 = 23;
+//static  int voltPinB3 = 24;
+//
+//static  int voltPinR1 = 25;
+//static  int voltPinR2 = 26;
+//static  int voltPinR3 = 27;
+//
+//static  int voltPinY1 = 28;
+//static  int voltPinY2 = 29;
 
 
 class TextileSensor { // this class should be friends with LEDController
@@ -52,7 +52,7 @@ public:
   
   //methods:
   TextileSensor();
-  bool calibrated(int& loops);
+  bool calibrated(int& loopsLeft, const int totalLoops);
   void updateTargetArray();
   	// this should update the values within the targets array based upon the data coming from the Arduino input pins
   

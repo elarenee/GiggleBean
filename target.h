@@ -5,7 +5,7 @@
 #include "track.h"
 #include <CapacitiveSensor.h>
 
-static const int defaultHighResInterval = 60;
+static const int defaultHighResInterval = 40;
 static const int defaultLowResInterval = 60;
 
 //we store the past N values for resistance reading
@@ -18,10 +18,10 @@ struct Target {
 
   Target()
   	: ledPin(0), analogPin(0), lowResInterval(defaultLowResInterval),
-          highResInterval(defaultHighResInterval), touched(false), stretched(false), baselineRes(700) {}
+          highResInterval(defaultHighResInterval), touched(false), stretched(false), baselineRes(0) {}
   Target(int inLedPin, int inAnalogPin, int inLowRes, int inHighRes) 
 	: ledPin(inLedPin), analogPin(inAnalogPin), lowResInterval(inLowRes),
-          highResInterval(inHighRes), touched(false), stretched(false), baselineRes(700) {}
+          highResInterval(inHighRes), touched(false), stretched(false), baselineRes(0) {}
   //attr:
   int ledPin; // this is the pin number associated with LED output
   int analogPin; // this is the pin number associated with this target region’s analog sensor reading
@@ -34,7 +34,7 @@ struct Target {
   int carryOverResistance;
   bool touched;
   bool stretched;
-  Track sounds[2];
+  //Track sounds[2];
   
 };
 

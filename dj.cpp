@@ -6,13 +6,14 @@ void DJ::determineSong(LightCombo currBlinkCombo, const Target targets[]) {
   
     int target1_idx = currBlinkCombo.target1Index;
     
-    double pressure = targets[target1_idx].resistanceReadings[sizeMemArray-1];
+    double pressure = targets[target1_idx].resistanceReadings[sizeMemArray-1] -
+                        targets[target1_idx].baselineRes;
     
     int new_vol = speaker.convertPressureToVolume(pressure);
     
     int track_idx = currBlinkCombo.getTrackIndex();
 
-    Serial.println("Song");
+    Serial.println("555");
     speaker.playTrack(Song, track_idx, new_vol);
 
     speaker.songs[track_idx].startTrack();
@@ -23,7 +24,8 @@ void DJ::adjustVolume(LightCombo currBlinkCombo, const Target targets[]) {
   
     int target1_idx = currBlinkCombo.target1Index;
     
-    double pressure = targets[target1_idx].resistanceReadings[sizeMemArray-1];
+    double pressure = targets[target1_idx].resistanceReadings[sizeMemArray-1] -
+                        targets[target1_idx].baselineRes;
      
     int new_vol = speaker.convertPressureToVolume(pressure);
     
@@ -55,7 +57,7 @@ void DJ::determineSound(Target targets[]) {
 
         //play bo'ing if stretch
         if(!speaker.sounds[1].isPlaying && targets[i].stretched) {
-    //       Serial.println("Bo'ing"); //111
+    //        Serial.println("Bo'ing"); //111
 
 
     // Serial.println(targets[i].baselineRes);
@@ -63,7 +65,7 @@ void DJ::determineSound(Target targets[]) {
     // String str2 = str1 + i;
     // String str3 = str2 + "]: " + targets[i].resistanceReadings[0]+ targets[i].resistanceReadings[1]+ targets[i].resistanceReadings[2];
     // Serial.println(str3);
-          
+
           speaker.playTrack(Sound, 2, speaker.defaultVolume);
           speaker.sounds[1].startTrack();
         }

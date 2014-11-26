@@ -46,11 +46,11 @@ bool TextileSensor::calibrated(int& loopsLeft, const int totalLoops) {
   //calibrate if we've read all
   if (loopsLeft < 1)
   {
-    Serial.println("Calibrated");
+  //  Serial.println("Calibrated");
     //  iterate through all 8 targets
     for (int i = 0; i < 8; i++ ) {
         targets[i].baselineRes /= totalLoops;
-        Serial.println(targets[i].baselineRes);
+    //    Serial.println(targets[i].baselineRes);
     }
     return true;
   }
@@ -147,7 +147,7 @@ void TextileSensor::updateTargetArray() {
         }
 
         // if a target has been giggling or bo'inging for too long, recalibrate it
-        if(targets[i].cyclesTouched >= 5 || targets[i].cyclesStretched >= 5) {
+        if(targets[i].cyclesTouched >= 20 || targets[i].cyclesStretched >= 20) {
 
           recalibrateTarget(targets[i]);
           targets[i].cyclesTouched = targets[i].cyclesStretched = 0;

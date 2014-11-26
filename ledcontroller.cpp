@@ -90,20 +90,22 @@ void LEDController::shuffleBlinkingLEDs() {
 void LEDController::makeBlink() {
   // make the specified target region blink (needs to access the targets[] array within TextileSensor)
   // directly modify the pin associated with that target (ask Matt)
-    if (lightModeOn) {
-  digitalWrite(TextileSensor().targets[currentBlinkCombo.target1Index].ledPin, LOW);
-  if (currentBlinkCombo.target2Index != -1) {
-    digitalWrite(TextileSensor().targets[currentBlinkCombo.target2Index].ledPin, LOW);
-  } 
-  delay(100);
+  if (lightModeOn) {
+    digitalWrite(TextileSensor().targets[currentBlinkCombo.target1Index].ledPin, LOW);
+    if (currentBlinkCombo.target2Index != -1) {
+      digitalWrite(TextileSensor().targets[currentBlinkCombo.target2Index].ledPin, LOW);
+    } 
+    delay(100);
 
-  digitalWrite(TextileSensor().targets[currentBlinkCombo.target1Index].ledPin, HIGH);
-  if (currentBlinkCombo.target2Index != -1) {
-    digitalWrite(TextileSensor().targets[currentBlinkCombo.target2Index].ledPin, HIGH);
-  } 
-  delay(100); 
-}
-
+    digitalWrite(TextileSensor().targets[currentBlinkCombo.target1Index].ledPin, HIGH);
+    if (currentBlinkCombo.target2Index != -1) {
+      digitalWrite(TextileSensor().targets[currentBlinkCombo.target2Index].ledPin, HIGH);
+    } 
+    delay(100); 
+  }
+  else {
+    delay(200);
+  }
 }
 
 LightCombo LEDController::getCurBlinkCombo() {

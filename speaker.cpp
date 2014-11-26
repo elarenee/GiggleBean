@@ -16,7 +16,7 @@ Speaker::Speaker() {
 void Speaker::playTrack (TrackType trackType, int idx, int vol) {
   // this function should send these three parameters over bluetooth 
   // to the tablet
-  Serial.println("sending playTrack data to Android");
+ // Serial.println("sending playTrack data to Android");
   
 }
 

@@ -5,13 +5,13 @@
 #include "track.h"
 #include <CapacitiveSensor.h>
 
-static const int defaultHighResInterval = 40;
+static const int defaultHighResInterval = 70;
 static const int defaultLowResInterval = 60;
 
 //we store the past N values for resistance reading
 //once this is full, we do some logic
 //then we start over at the beginning of the array
-static const int sizeMemArray = 4;
+static const int sizeMemArray = 10;
 static int memArrayIndex = 0;
 
 struct Target {

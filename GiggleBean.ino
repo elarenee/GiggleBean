@@ -53,7 +53,7 @@
    
    //digital write needed for voltage pins?
 
-         leds.stopBlinking();
+         
 
   }
   
@@ -72,6 +72,7 @@
           memset(serialMessage, -1, sizeof(serialMessage));
           index = 0;
         } 
+
         if (!strcmp(serialMessage, "132")){
         delay(5000);
           Serial.println("Re-Calibrate");
@@ -83,7 +84,7 @@
       } else {
         index = 0;
       }
-
+      leds.stopBlinking();
       textile.updateTargetArray();
       dj.speaker.updateSounds();
       dj.speaker.updateSongs(songEnded); 

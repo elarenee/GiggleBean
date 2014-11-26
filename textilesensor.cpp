@@ -23,13 +23,13 @@ bool TextileSensor::calibrated(int& loopsLeft, const int totalLoops) {
     //  iterate through all 8 targets
   for (int i = 0; i < 8; i++ ) {
     int res = analogRead(targets[i].analogPin);
-    if (res <= 0)
+    if (res <= 10)
     { 
-      String st = "target ";
-      String st2 = st + i;
-      String st3 = " <= 0.";
-      st = st2 + st3;
-      Serial.println(st);
+      // String st = "target ";
+      // String st2 = st + i;
+      // String st3 = " <= 0.";
+      // st = st2 + st3;
+      // Serial.println(st);
       //if any of the targets still aren't getting values, we want to start calibration over
       loopsLeft = totalLoops;
       for (int j = 0; j < 8; ++j)
@@ -61,9 +61,9 @@ bool TextileSensor::calibrated(int& loopsLeft, const int totalLoops) {
 void TextileSensor::updateTargetArray() {
   
   //read resistance from the pins and update resistance & isTouched and isStretched vals
-         String s = "memArrayIndex: ";
-         String s2 = s + memArrayIndex;
-      Serial.println(s2);
+      //    String s = "memArrayIndex: ";
+      //    String s2 = s + memArrayIndex;
+      // Serial.println(s2);
   //  iterate through all 8 targets
 
   
@@ -76,6 +76,16 @@ void TextileSensor::updateTargetArray() {
     else {   //do some logic on the past resistance readings
       memArrayIndex = 0;
       for (int i = 0; i < 8; i++ ) {
+
+
+    Serial.println(targets[i].baselineRes);
+    String str1 = "target [";
+    String str2 = str1 + i;
+    int x =targets[i].resistanceReadings[0]-targets[i].baselineRes;
+    String str3 = str2 + "]: " + x;
+    Serial.println(str3);
+
+
         targets[i].stretched = false;
         targets[i].touched = false;
         //if the resistance is over the high threshold, we have a stretch
@@ -83,10 +93,11 @@ void TextileSensor::updateTargetArray() {
         {
           if (targets[i].resistanceReadings[j] - targets[i].baselineRes > targets[i].highResInterval) {
             targets[i].stretched = true;
-            s = "target ";
-            s2 = s + i;
-            s = s2 + " stretched";
-            Serial.println(s);
+            targets[i].cyclesSinceRelease = 0;
+            // s = "target ";
+            // s2 = s + i;
+            // s = s2 + " stretched";
+            // Serial.println(s);
           }
         } 
         //if it wasn't just stretched, maybe we have a gentle touch
@@ -95,11 +106,15 @@ void TextileSensor::updateTargetArray() {
           {
             if (targets[i].baselineRes - targets[i].resistanceReadings[j] > targets[i].lowResInterval) {
               targets[i].touched = true;
+                          targets[i].cyclesSinceRelease = 0;
+
             }
           } 
         }
         //if not touched or stretched, let's calibrate
         if (!targets[i].touched && !targets[i].stretched) {
+          if (targets[i].cyclesSinceRelease++ > 20) {
+
           targets[i].baselineRes = 0;
           for (int j = 0; j < sizeMemArray; ++j)
           {
@@ -107,22 +122,23 @@ void TextileSensor::updateTargetArray() {
           }
           targets[i].baselineRes /= sizeMemArray;
         }
+        }
         
         //FOR TESTING
     //Serial.println(targets[i].touched);
     //Serial.println(targets[i].stretched);
     //Serial.println(i);
-    Serial.println(targets[i].baselineRes);
-    String str1 = "target [";
-    String str2 = str1 + i;
-    String str3 = str2 + "]: " + targets[i].resistanceReadings[0]+ targets[i].resistanceReadings[1]+ targets[i].resistanceReadings[2];
-    Serial.println(str3);
+    // Serial.println(targets[i].baselineRes);
+    // String str1 = "target [";
+    // String str2 = str1 + i;
+    // String str3 = str2 + "]: " + targets[i].resistanceReadings[0]+ targets[i].resistanceReadings[1]+ targets[i].resistanceReadings[2];
+    // Serial.println(str3);
       }
    }
 
   
 
-  delay(200);
+ // delay(500);
   Serial.println();
 
 }

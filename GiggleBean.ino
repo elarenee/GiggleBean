@@ -86,11 +86,16 @@
       textile.updateTargetArray(); 
       dj.speaker.updateSounds();
       dj.speaker.updateSongs(songEnded); 
-        
-      if(textile.allBlinkingTargetsStretched(leds.getCurBlinkCombo())) {
+      //if the song has just ended, we just shuffle and blink
+      if(songEnded) {
+        leds.shuffleBlinkingLEDs();leds.makeBlink();
+        songEnded = false;
+      } 
+      //if a song didn't just end, check the touch
+      else if(textile.allBlinkingTargetsStretched(leds.getCurBlinkCombo())) {
         if(!dj.speaker.songPlaying() ) {
           leds.stopBlinking();
-          Serial.println("all blinking targets stretched");
+       //   Serial.println("all blinking targets stretched");
           //remove shuffle from here later
           //leds.shuffleBlinkingLEDs();
           dj.determineSong(leds.getCurBlinkCombo(), textile.targets);
@@ -102,8 +107,7 @@
 
         //}
         
-
-
+      }
       // may or may not play a sound depending on whether the textile is being touched somewhere
       else {
         dj.determineSound(textile.targets);
@@ -113,12 +117,9 @@
           leds.stopBlinking();   
       } 
       
-      if(songEnded) {
-        leds.shuffleBlinkingLEDs();
-        songEnded = false;
-      } 
+
 
     }
     }
-    }
+    
   

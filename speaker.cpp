@@ -4,9 +4,9 @@
 Speaker::Speaker() {
 
   defaultVolume = 100;
-  songs[0] = Track(10);
-  songs[1] = Track(16.5);
-  songs[2] = Track(15);
+  songs[0] = Track(2000); //10000//put these into milliseconds
+  songs[1] = Track(2000);//16500
+  songs[2] = Track(2000);//15000
   
   sounds[0] = Track(SOUND_DURATION);
   sounds[1] = Track(SOUND_DURATION);
@@ -40,7 +40,7 @@ bool Speaker::songPlaying() {
 void Speaker::updateSongs(bool& songEnded) {
     //loop through songs
     bool songJustEnded = false;
-    for (int i = 0; i < 3; ++i) {  Serial.println("about to call update is playing for the song");
+    for (int i = 0; i < 3; ++i) {  //Serial.println("about to call update is playing for the song");
 
         songJustEnded = songs[i].updateIsPlaying();
         if (songJustEnded)

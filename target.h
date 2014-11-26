@@ -21,7 +21,7 @@ struct Target {
           highResInterval(defaultHighResInterval), touched(false), stretched(false), baselineRes(0) {}
   Target(int inLedPin, int inAnalogPin, int inLowRes, int inHighRes) 
 	: ledPin(inLedPin), analogPin(inAnalogPin), lowResInterval(inLowRes),
-          highResInterval(inHighRes), touched(false), stretched(false), baselineRes(0) {}
+          highResInterval(inHighRes), touched(false), stretched(false), baselineRes(0), cyclesSinceRelease(0) {}
 
   //attr:
   int ledPin; // this is the pin number associated with LED output
@@ -34,6 +34,8 @@ struct Target {
   int resistanceReadings[sizeMemArray];
   bool touched;
   bool stretched;
+  int cyclesSinceRelease; //we'll track how many loops we've gone through since the target stopped being
+                          // stretched or touched. after N loops we'll recalibrate.
   //Track sounds[2];
   
 };

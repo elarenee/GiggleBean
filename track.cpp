@@ -19,11 +19,11 @@ bool Track::updateIsPlaying() {
     
     if (duration <= now - startTime) {
       isPlaying = false;
-      Serial.println("returning true");
+     // Serial.println("returning true");
       return true; //returns that the song just ended
     }
   }
-        Serial.println("returning false");
+      //  Serial.println("returning false");
 
   return false; //the song did not just end
 }

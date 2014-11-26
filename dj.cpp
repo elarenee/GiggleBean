@@ -11,7 +11,8 @@ void DJ::determineSong(LightCombo currBlinkCombo, const Target targets[]) {
     int new_vol = speaker.convertPressureToVolume(pressure);
     
     int track_idx = currBlinkCombo.getTrackIndex();
-    
+
+    Serial.println("Song");
     speaker.playTrack(Song, track_idx, new_vol);
 
     speaker.songs[track_idx].startTrack();
@@ -38,15 +39,31 @@ void DJ::determineSound(Target targets[]) {
       unsigned long timer1;
       unsigned long timer2;
         //play giggle if soft touch
-        if (targets[i].touched && targets[i].stretched) {
-          Serial.println("222");
+        if (targets[i].touched && !speaker.sounds[0].isPlaying) {
+    //       Serial.println("Giggle"); //222
+
+    // Serial.println(targets[i].baselineRes);
+    // String str1 = "target [";
+    // String str2 = str1 + i;
+    // String str3 = str2 + "]: " + targets[i].resistanceReadings[0]+ targets[i].resistanceReadings[1]+ targets[i].resistanceReadings[2];
+    // Serial.println(str3);
+
+
           speaker.playTrack(Sound, 1, speaker.defaultVolume);
           speaker.sounds[0].startTrack();
         }
 
         //play bo'ing if stretch
         if(!speaker.sounds[1].isPlaying && targets[i].stretched) {
-          Serial.println("111");
+    //       Serial.println("Bo'ing"); //111
+
+
+    // Serial.println(targets[i].baselineRes);
+    // String str1 = "target [";
+    // String str2 = str1 + i;
+    // String str3 = str2 + "]: " + targets[i].resistanceReadings[0]+ targets[i].resistanceReadings[1]+ targets[i].resistanceReadings[2];
+    // Serial.println(str3);
+          
           speaker.playTrack(Sound, 2, speaker.defaultVolume);
           speaker.sounds[1].startTrack();
         }

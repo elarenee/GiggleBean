@@ -83,12 +83,14 @@
       } else {
         index = 0;
       }
-      textile.updateTargetArray(); 
+
+      textile.updateTargetArray();
       dj.speaker.updateSounds();
       dj.speaker.updateSongs(songEnded); 
       //if the song has just ended, we just shuffle and blink
       if(songEnded) {
-        leds.shuffleBlinkingLEDs();leds.makeBlink();
+        leds.shuffleBlinkingLEDs();
+        leds.makeBlink();
         songEnded = false;
       } 
       //if a song didn't just end, check the touch

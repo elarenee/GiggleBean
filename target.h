@@ -11,17 +11,19 @@ static const int defaultLowResInterval = 60;
 //we store the past N values for resistance reading
 //once this is full, we do some logic
 //then we start over at the beginning of the array
-static const int sizeMemArray = 3;
+static const int sizeMemArray = 4;
 static int memArrayIndex = 0;
 
 struct Target {
 
   Target()
   	: ledPin(0), analogPin(0), lowResInterval(defaultLowResInterval),
-          highResInterval(defaultHighResInterval), touched(false), stretched(false), baselineRes(0) {}
+          highResInterval(defaultHighResInterval), touched(false), stretched(false), baselineRes(0), cyclesSinceRelease(0),
+          cyclesStretched(0), cyclesTouched(0) {}
   Target(int inLedPin, int inAnalogPin, int inLowRes, int inHighRes) 
 	: ledPin(inLedPin), analogPin(inAnalogPin), lowResInterval(inLowRes),
-          highResInterval(inHighRes), touched(false), stretched(false), baselineRes(0), cyclesSinceRelease(0) {}
+          highResInterval(inHighRes), touched(false), stretched(false), baselineRes(0), cyclesSinceRelease(0),
+          cyclesStretched(0), cyclesTouched(0) {}
 
   //attr:
   int ledPin; // this is the pin number associated with LED output
@@ -36,6 +38,9 @@ struct Target {
   bool stretched;
   int cyclesSinceRelease; //we'll track how many loops we've gone through since the target stopped being
                           // stretched or touched. after N loops we'll recalibrate.
+
+  int cyclesStretched;
+  int cyclesTouched; 
   //Track sounds[2];
   
 };

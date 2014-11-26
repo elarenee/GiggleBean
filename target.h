@@ -22,16 +22,16 @@ struct Target {
   Target(int inLedPin, int inAnalogPin, int inLowRes, int inHighRes) 
 	: ledPin(inLedPin), analogPin(inAnalogPin), lowResInterval(inLowRes),
           highResInterval(inHighRes), touched(false), stretched(false), baselineRes(0) {}
+
   //attr:
   int ledPin; // this is the pin number associated with LED output
   int analogPin; // this is the pin number associated with this target region’s analog sensor reading
-  int resistanceReadings[sizeMemArray]; // values retrieved from analog read
-  int baselineRes; //both constructors will set this to 700, but we will calibrate right at the beginning and throughout
+  int baselineRes; // value retrieved from analog read
   int lowResInterval; //when softly touched, the resistance drops suddenly for about one loop. 
-                        //through testing we will hard code a value just lower than how much it drops to on a soft touch.
+                        //through testing we will hard code a value just above where it drops to on a soft touch.
   int highResInterval; //when pushed hard, the resistance rises suddenly for the duration of the push. 
-                        //through testing we will hard code a value just lower than how much it jumps for "hard pressure."
-  int carryOverResistance;
+                        //through testing we will hard code a value just below the resistance for "hard pressure."
+  int resistanceReadings[sizeMemArray];
   bool touched;
   bool stretched;
   //Track sounds[2];

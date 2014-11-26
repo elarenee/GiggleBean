@@ -1,4 +1,4 @@
-#include "dj.h"
+  #include "dj.h"
 #include "lightcombo.h"
 #include "target.h"
 #include "ledcontroller.h"
@@ -6,6 +6,7 @@
 #include "track.h"
 #include "textilesensor.h"
  
+
   int loopsLeftToCalibrate = 10;
   const int totalLoopsToCalibrate = 10;
   bool songEnded = false;
@@ -16,8 +17,10 @@
   char inputChar;
   int index = 0;
   
+  
   void setup() {
     // put your setup code here, to run once:
+    leds.lightModeOn = true;
     
     Serial.begin(9600);
     
@@ -55,6 +58,7 @@
   }
   
   
+
   void loop() {
     if (textile.calibrated(loopsLeftToCalibrate, totalLoopsToCalibrate)) {
       if (Serial.available()){
@@ -63,17 +67,11 @@
           serialMessage[i] = inputChar;
           serialMessage[i+1] = '\0';
         }
-     /*   if (!strcmp(serialMessage, "123")){
-        delay(500);
-          Serial.println("Turn up volume");
+        if (!strcmp(serialMessage, "000")){
+         leds.lightModeOn = !leds.lightModeOn;
           memset(serialMessage, -1, sizeof(serialMessage));
           index = 0;
-        }*/
-        if (!strcmp(serialMessage, "134")){
-          Serial.println("Turn down volume");
-          memset(serialMessage, -1, sizeof(serialMessage));
-          index = 0;
-        }
+        } 
         if (!strcmp(serialMessage, "132")){
         delay(5000);
           Serial.println("Re-Calibrate");
@@ -104,8 +102,8 @@
 
         //}
         
-      }
-      
+
+
       // may or may not play a sound depending on whether the textile is being touched somewhere
       else {
         dj.determineSound(textile.targets);
@@ -119,5 +117,8 @@
         leds.shuffleBlinkingLEDs();
         songEnded = false;
       } 
+
     }
-  }
+    }
+    }
+  

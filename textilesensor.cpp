@@ -55,8 +55,8 @@ bool TextileSensor::calibrated(int& loopsLeft, const int totalLoops) {
     return true;
   }
   return false;
-
 }
+
 // this should update the values within the targets array based upon the data coming from the Arduino input pins
 void TextileSensor::updateTargetArray() {
   
@@ -65,6 +65,7 @@ void TextileSensor::updateTargetArray() {
          String s2 = s + memArrayIndex;
       Serial.println(s2);
   //  iterate through all 8 targets
+
   
     if (memArrayIndex < sizeMemArray) { // read in values
       for (int i = 0; i < 8; i++ ) {
@@ -123,6 +124,7 @@ void TextileSensor::updateTargetArray() {
 
   delay(200);
   Serial.println();
+
 }
 //      //digitalWrite(A15, 255);
 //      double temp_resistance = analogRead(targets[i].analogPin);

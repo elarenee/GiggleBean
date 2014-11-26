@@ -21,6 +21,7 @@
   void setup() {
     // put your setup code here, to run once:
     leds.lightModeOn = true;
+    dj.isSoundPlaying = true;
     
     Serial.begin(9600);
     
@@ -60,7 +61,8 @@
   
 
   void loop() {
-    if (textile.calibrated(loopsLeftToCalibrate, totalLoopsToCalibrate)) {
+    
+    if (textile.calibrated(loopsLeftToCalibrate, totalLoopsToCalibrate)) 
       if (Serial.available()){
         for (int i = 0;i < 3;i++){
           inputChar = Serial.read();
@@ -72,6 +74,11 @@
           memset(serialMessage, -1, sizeof(serialMessage));
           index = 0;
         } 
+        if (!strcmp(serialMessage, "111")){
+        dj.isSoundPlaying = !dj.isSoundPlaying;
+          memset(serialMessage, -1, sizeof(serialMessage));
+          index = 0;
+        }
 
         if (!strcmp(serialMessage, "132")){
         delay(5000);
@@ -97,6 +104,7 @@
       //if a song didn't just end, check the touch
       else if(textile.allBlinkingTargetsStretched(leds.getCurBlinkCombo())) {
         if(!dj.speaker.songPlaying() ) {
+          Serial.println("555");
           leds.stopBlinking();
        //   Serial.println("all blinking targets stretched");
           //remove shuffle from here later
@@ -122,7 +130,7 @@
       
 
 
-    }
+    
     }
     
   

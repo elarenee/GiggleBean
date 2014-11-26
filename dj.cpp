@@ -12,11 +12,12 @@ void DJ::determineSong(LightCombo currBlinkCombo, const Target targets[]) {
     int new_vol = speaker.convertPressureToVolume(pressure);
     
     int track_idx = currBlinkCombo.getTrackIndex();
-
-    Serial.println("555");
-    speaker.playTrack(Song, track_idx, new_vol);
-
-    speaker.songs[track_idx].startTrack();
+    
+    
+    //speaker.playTrack(Song, track_idx, new_vol);
+    if (!speaker.songPlaying()){
+        speaker.songs[track_idx].startTrack();
+    }
     
 }
 

@@ -13,7 +13,7 @@ class DJ {
 public:
   //attr:
   Speaker speaker;
-  
+  bool isSoundPlaying;
   //methods:
   void determineSong(LightCombo currBlinkCombo, const Target targets[]);
   

@@ -4,9 +4,9 @@
 Speaker::Speaker() {
 
   defaultVolume = 100;
-  songs[0] = Track(2000); //10000//put these into milliseconds
-  songs[1] = Track(2000);//16500
-  songs[2] = Track(2000);//15000
+  songs[0] = Track(10100); //10000//put these into milliseconds
+  songs[1] = Track(19500);//16500
+  songs[2] = Track(17500);//15000
   
   sounds[0] = Track(SOUND_DURATION);
   sounds[1] = Track(SOUND_DURATION);

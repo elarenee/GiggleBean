@@ -4,7 +4,9 @@
 #include <Arduino.h>
 
 #define SOUND_DURATION 2000
-#define SONG_DURATION 10000
+#define SONG0_DURATION 10100
+#define SONG1_DURATION 14100
+#define SONG2_DURATION 16600
 
 enum TrackType {Sound, Song};
 

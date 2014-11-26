@@ -9,8 +9,8 @@ Track::Track(double in_duration) {
 }
 
 void Track::startTrack() {
-  startTime = millis();
   isPlaying = true;
+    startTime = millis();
 }
 
 bool Track::updateIsPlaying() {

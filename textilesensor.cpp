@@ -4,10 +4,10 @@
 TextileSensor::TextileSensor() {
         // each target is associated with an output LED pin and an input analog pin. 
         // TO DO: find low and high resistance defaults for each target
-	  targets[0] = Target( ledPinB1, analogPinB1, defaultLowResInterval, defaultHighResInterval);
- 	  targets[1] = Target( ledPinB2, analogPinB2, defaultLowResInterval, defaultHighResInterval);
- 	  targets[2] = Target( ledPinB3, analogPinB3, defaultLowResInterval, defaultHighResInterval);
- 	  targets[3] = Target( ledPinR1, analogPinR1, defaultLowResInterval, defaultHighResInterval);
+	targets[0] = Target( ledPinB1, analogPinB1, defaultLowResInterval, defaultHighResInterval);
+ 	targets[1] = Target( ledPinB2, analogPinB2, defaultLowResInterval, defaultHighResInterval);
+ 	targets[2] = Target( ledPinB3, analogPinB3, defaultLowResInterval, defaultHighResInterval);
+ 	targets[3] = Target( ledPinR1, analogPinR1, defaultLowResInterval, defaultHighResInterval);
   	targets[4] = Target( ledPinR2, analogPinR2, defaultLowResInterval, defaultHighResInterval); 
   	targets[5] = Target( ledPinR3, analogPinR3, defaultLowResInterval, defaultHighResInterval); 
   	targets[6] = Target( ledPinY1, analogPinY1, defaultLowResInterval, defaultHighResInterval);
@@ -78,7 +78,11 @@ void TextileSensor::updateTargetArray() {
       // Serial.println(s2);
   //  iterate through all 8 targets
 
-  
+//    Serial.println(analogRead(targets[7].analogPin));
+//    Serial.println("baseline:");
+//    Serial.println(targets[7].baselineRes);
+//    delay(200);
+    
     if (memArrayIndex < sizeMemArray) { // read in values
       for (int i = 0; i < 8; i++ ) {
         double res = analogRead(targets[i].analogPin);
@@ -98,7 +102,7 @@ void TextileSensor::updateTargetArray() {
       memArrayIndex = 0;
       for (int i = 0; i < 8; i++ ) {
 
-
+        
         // Serial.println(targets[i].baselineRes);
         // String str1 = "target [";
         // String str2 = str1 + i;

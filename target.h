@@ -5,7 +5,7 @@
 #include "track.h"
 #include <CapacitiveSensor.h>
 
-static const int defaultHighResInterval = 70;
+static const int defaultHighResInterval = 45;
 static const int defaultLowResInterval = 60;
 
 //we store the past N values for resistance reading

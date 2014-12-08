@@ -20,16 +20,16 @@ static  int ledPinY1 = 9;                              	//Yellow LED
 static  int ledPinY2 = 10;                             	//Yellow LED
 
 //Global Pins for Analog Input
-static  int analogPinB1 = 0;								//Blue Touch
-static  int analogPinB2 = 1;								//Blue Touch
-static  int analogPinB3 = 2;								//Blue Touch
+static  int analogPinB1 = A0;								//Blue Touch
+static  int analogPinB2 = A1;								//Blue Touch
+static  int analogPinB3 = A2;								//Blue Touch
 
-static  int analogPinR1 = 3;								//Red Touch
-static  int analogPinR2 = 4;								//Red Touch
-static  int analogPinR3 = 5;								//Red Touch
+static  int analogPinR1 = A3;								//Red Touch
+static  int analogPinR2 = A4;								//Red Touch
+static  int analogPinR3 = A5;								//Red Touch
 
-static  int analogPinY1 = 6;								//Yellow Touch
-static  int analogPinY2 = 7;								//Yellow Touch
+static  int analogPinY1 = A6;								//Yellow Touch
+static  int analogPinY2 = A7;								//Yellow Touch
 
 //Global Pins that supply voltage for Analog Input
 static  int voltPinB1 = 22;

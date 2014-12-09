@@ -1,18 +1,23 @@
-  #include "dj.h"
+#include "dj.h"
 #include "lightcombo.h"
 #include "target.h"
 #include "ledcontroller.h"
-#include "speaker.h"
-#include "track.h"
+//#include "speaker.h"
+//#include "track.h"
 #include "textilesensor.h"
+
  
 
   int loopsLeftToCalibrate = 10;
   const int totalLoopsToCalibrate = 10;
-  bool songEnded = false;
+  bool bluetoothResetting = false;
+
+  bool songJustEnded = false;
+
   TextileSensor textile;
   DJ dj;
   LEDController leds;
+
   char serialMessage[4];
   char inputChar;
   int index = 0;
@@ -20,9 +25,9 @@
   
   void setup() {
     // put your setup code here, to run once:
+    dj.soundModeOn = true;
     leds.lightModeOn = true;
-    dj.isSoundPlaying = true;
-    
+
     Serial.begin(9600);
     
     pinMode(ledPinB1, OUTPUT);
@@ -44,93 +49,113 @@
     pinMode(analogPinY2, INPUT);
     
     pinMode(voltPinB1, OUTPUT);
-//    pinMode(voltPinB2, OUTPUT);
-//    pinMode(voltPinB3, OUTPUT);
-//    pinMode(voltPinR1, OUTPUT);
-//    pinMode(voltPinR2, OUTPUT);
-//    pinMode(voltPinR3, OUTPUT);  
-//    pinMode(voltPinY1, OUTPUT);
-//    pinMode(voltPinY2, OUTPUT); 
-   
-   //digital write needed for voltage pins?
-
-         
-
   }
   
   
 
   void loop() {
-    
-    if (textile.calibrated(loopsLeftToCalibrate, totalLoopsToCalibrate)) 
-      if (Serial.available()){
-        for (int i = 0;i < 3;i++){
-          inputChar = Serial.read();
-          serialMessage[i] = inputChar;
-          serialMessage[i+1] = '\0';
-        }
-        if (!strcmp(serialMessage, "000")){
-         leds.lightModeOn = !leds.lightModeOn;
-          memset(serialMessage, -1, sizeof(serialMessage));
-          index = 0;
-        } 
-        if (!strcmp(serialMessage, "111")){
-        dj.isSoundPlaying = !dj.isSoundPlaying;
-          memset(serialMessage, -1, sizeof(serialMessage));
-          index = 0;
-        }
-
-        if (!strcmp(serialMessage, "132")){
-        delay(5000);
-          Serial.println("Re-Calibrate");
-          memset(serialMessage, -1, sizeof(serialMessage));
-          index = 0;
-          loopsLeftToCalibrate = totalLoopsToCalibrate;
-          leds.turnLightsOff();
-        }
-      } else {
+    //Get Messages from Android
+    if (Serial.available()){
+      for (int i = 0;i < 3;i++){
+        inputChar = Serial.read();
+        serialMessage[i] = inputChar;
+        serialMessage[i+1] = '\0';
+      }
+      if (!strcmp(serialMessage, "000")){ //Lights ON/OFF Pressed
+        leds.lightModeOn = !leds.lightModeOn;
+        memset(serialMessage, -1, sizeof(serialMessage));
+        index = 0;
+      } 
+      if (!strcmp(serialMessage, "111")){ //Sound ON/OFF Pressed
+        dj.soundModeOn = !dj.soundModeOn;
+        memset(serialMessage, -1, sizeof(serialMessage));
         index = 0;
       }
-      leds.stopBlinking();
-      textile.updateTargetArray();
-      dj.speaker.updateSounds();
-      dj.speaker.updateSongs(songEnded); 
-      //if the song has just ended, we just shuffle and blink
-      if(songEnded) {
+      if (!strcmp(serialMessage, "222")){ //OnComplete for Any Song Ending
+        //if the song has just ended, we just shuffle and blink
+        songJustEnded = true;
+        dj.songIsPlaying = false;
+        memset(serialMessage, -1, sizeof(serialMessage));
+        index = 0;
+      }
+      if (!strcmp(serialMessage, "001")){ //Restarting BlueTooth
+        //Let's slowly blink all lights so the bean seems inactive but still on
+        bluetoothResetting = true;
+        leds.makeWholeBeanBlink();
+        memset(serialMessage, -1, sizeof(serialMessage));
+        index = 0;
+      }
+      if (!strcmp(serialMessage, "002")){ //BlueTooth Successfully Restarted
+        //Get back to playing
+        bluetoothResetting = false;
+        leds.makeBlink();
+        memset(serialMessage, -1, sizeof(serialMessage));
+        index = 0;
+      }
+      if (!strcmp(serialMessage, "555")){ //App Turned Off
+        //TODO what goes here?
+        memset(serialMessage, -1, sizeof(serialMessage));
+        index = 0;
+      }
+      if (!strcmp(serialMessage, "132")){ //Currently not implemented
+      delay(5000);
+        Serial.println("Re-Calibrate");
+        memset(serialMessage, -1, sizeof(serialMessage));
+        index = 0;
+        loopsLeftToCalibrate = totalLoopsToCalibrate;
+        leds.turnLightsOff();
+      }
+    } 
+    else {
+      index = 0;
+    }
+    //Check touches and send messages to Android
+    if (textile.calibrated(loopsLeftToCalibrate, totalLoopsToCalibrate)) {
+      //Tell the Android we are good to go
+      //Do this every time in case one gets lost
+      //PUT THIS BACK REMOVED FOR TESTING
+      //Serial.println("012");
+
+//take out for testing
+     /* if (bluetoothResetting) {
+        leds.makeWholeBeanBlink();
+      }
+      else */if (songJustEnded) {
+        //in this case, we want to act on what's happening, then shuffle
+        //so we don't get any accidental songs playing
+        dj.determineSound(textile.targets);
         leds.shuffleBlinkingLEDs();
         leds.makeBlink();
-        songEnded = false;
-      } 
-      //if a song didn't just end, check the touch
-      else if(textile.allBlinkingTargetsStretched(leds.getCurBlinkCombo())) {
-        if(!dj.speaker.songPlaying() ) {
-          Serial.println("555");
-          leds.stopBlinking();
-       //   Serial.println("all blinking targets stretched");
-          //remove shuffle from here later
-          //leds.shuffleBlinkingLEDs();
-          dj.determineSong(leds.getCurBlinkCombo(), textile.targets);
-        }
-
-        //else {
-          //adjust volume
-  //        dj.adjustVolume(leds.getCurBlinkCombo(), textile.targets);
-
-        //}
-        
       }
-      // may or may not play a sound depending on whether the textile is being touched somewhere
       else {
-        dj.determineSound(textile.targets);
-        if( !dj.speaker.songPlaying() ) 
-          leds.makeBlink();
-        else
-          leds.stopBlinking();   
-      } 
-      
-
-      Serial.println("333");
-      delay(5000);
+        leds.stopBlinking();
+        textile.updateTargetArray();
+   
+        //Check Song. If not Song check Sound.
+        if(textile.allBlinkingTargetsStretched(leds.getCurBlinkCombo())) {
+          if(!dj.songIsPlaying) {
+            // Play Song
+            if (!leds.lightModeOn) {
+              //if lights aren't on, triggering a song would be an accident
+              songJustEnded = true; //this will make the lights shuffle on the next loop
+            }
+            else {
+              dj.determineSong(leds.getCurBlinkCombo());
+              dj.songIsPlaying = true;
+              leds.stopBlinking();
+           //   Serial.println("all blinking targets stretched");
+            }
+          }
+        }
+        // Check Sound.
+        else {
+          dj.determineSound(textile.targets);
+          if(!dj.songIsPlaying) 
+            leds.makeBlink();  
+        } 
+        //delay(5000);
+      }
     }
+  }
     
   

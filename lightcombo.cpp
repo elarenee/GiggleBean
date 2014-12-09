@@ -22,5 +22,5 @@ LightCombo::LightCombo() {
 
 // returns the integer index value associated with the color of this blinkCombo
 int LightCombo::getTrackIndex() {
-  return (int)color;
+	return (int)color;
 }

@@ -2,11 +2,12 @@
 #ifndef TARGET_H
 #define TARGET_H
 
-#include "track.h"
+//#include "track.h"
 #include <CapacitiveSensor.h>
+#include <Arduino.h>
 
-static const int defaultHighResInterval = 45;
-static const int defaultLowResInterval = 60;
+static const int defaultHighResInterval = 50;
+static const int defaultLowResInterval = 5;
 
 //we store the past N values for resistance reading
 //once this is full, we do some logic

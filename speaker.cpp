@@ -3,32 +3,32 @@
 
 Speaker::Speaker() {
 
-  defaultVolume = 100;
-  songs[0] = Track(14500); //10000//put these into milliseconds
-  songs[1] = Track(14500);//16500
-  songs[2] = Track(14500);//15000
+//  defaultVolume = 100;
+  songsPlaying[0] = false;//Track(14500); //10000//put these into milliseconds
+  songsPlaying[1] = false;//Track(14500);//16500
+  songsPlaying[2] = false;//Track(14500);//15000
   
-  sounds[0] = Track(SOUND_DURATION);
-  sounds[1] = Track(SOUND_DURATION);
+ // sounds[0] = false;//Track(SOUND_DURATION);
+ // sounds[1] = false;//Track(SOUND_DURATION);
 
 }
   
-void Speaker::playTrack (TrackType trackType, int idx, int vol) {
-  // this function should send these three parameters over bluetooth 
-  // to the tablet
- // Serial.println("sending playTrack data to Android");
+// void Speaker::playTrack (TrackType trackType, int idx, int vol) {
+//   // this function should send these three parameters over bluetooth 
+//   // to the tablet
+//  // Serial.println("sending playTrack data to Android");
   
-}
+// }
 
-int Speaker::convertPressureToVolume(double pressure) {
-  // somehow convert pressure to a "volume" integer and add it to additional volume
-  int volume = defaultVolume + pressure/*some equation with constants here*/; // we'll lose precision here, but it's ok!
-  return volume;
-}
+// int Speaker::convertPressureToVolume(double pressure) {
+//   // somehow convert pressure to a "volume" integer and add it to additional volume
+//   int volume = defaultVolume + pressure/*some equation with constants here*/; // we'll lose precision here, but it's ok!
+//   return volume;
+// }
 
 bool Speaker::songPlaying() {
   
-  if(songs[0].isPlaying || songs[1].isPlaying || songs[2].isPlaying) {
+  if(songsPlaying[0] || songsPlaying[1] || songsPlaying[2]) {
     return true;
   }
  
@@ -37,18 +37,18 @@ bool Speaker::songPlaying() {
  
 }
 
-void Speaker::updateSongs(bool& songEnded) {
-    //loop through songs
-    bool songJustEnded = false;
-    for (int i = 0; i < 3; ++i) {  //Serial.println("about to call update is playing for the song");
+// void Speaker::updateSongs(bool& songEnded) {
+//     //loop through songs
+//     bool songJustEnded = false;
+//     for (int i = 0; i < 3; ++i) {  //Serial.println("about to call update is playing for the song");
 
-        songJustEnded = songs[i].updateIsPlaying();
-        if (songJustEnded)
-          songEnded = true;
-    }
-}
+//         songJustEnded = songs[i].updateIsPlaying();
+//         if (songJustEnded)
+//           songEnded = true;
+//     }
+// }
 
-void Speaker::updateSounds() {
-    sounds[0].updateIsPlaying();
-    sounds[1].updateIsPlaying();
-}
+// void Speaker::updateSounds() {
+//     sounds[0].updateIsPlaying();
+//     sounds[1].updateIsPlaying();
+// }

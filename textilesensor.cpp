@@ -3,7 +3,7 @@
 
 TextileSensor::TextileSensor() {
         // each target is associated with an output LED pin and an input analog pin. 
-        // TO DO: find low and high resistance defaults for each target
+        // TODO: find low and high resistance defaults for each target
 	targets[0] = Target( ledPinB1, analogPinB1, defaultLowResInterval, defaultHighResInterval);
  	targets[1] = Target( ledPinB2, analogPinB2, defaultLowResInterval, defaultHighResInterval);
  	targets[2] = Target( ledPinB3, analogPinB3, defaultLowResInterval, defaultHighResInterval);
@@ -25,6 +25,7 @@ bool TextileSensor::calibrated(int& loopsLeft, const int totalLoops) {
     int res = analogRead(targets[i].analogPin);
     if (res <= 10)
     { 
+      Serial.println(i); //This line to figure out problem pin
       // String st = "target ";
       // String st2 = st + i;
       // String st3 = " <= 0.";
@@ -71,7 +72,6 @@ void recalibrateTarget(Target& t) {
 // this should update the values within the targets array based upon the data coming from the Arduino input pins
 // returns false if the values have to be recalibrated; true otherwise
 void TextileSensor::updateTargetArray() {
-  
   //read resistance from the pins and update resistance & isTouched and isStretched vals
       //    String s = "memArrayIndex: ";
       //    String s2 = s + memArrayIndex;
@@ -85,70 +85,107 @@ void TextileSensor::updateTargetArray() {
     
     if (memArrayIndex < sizeMemArray) { // read in values
       for (int i = 0; i < 8; i++ ) {
-        double res = analogRead(targets[i].analogPin);
-
-        // if target is reading in weird values <= 10
-        /*if(res <= 10) {
-          // want to pause here and ask the user to shake the structure so that everything can be recalibrated.
-          // maybe flash all the lights or play a quick mp3 that says "Shake me!"
-          Serial.println("SHAKE ME!");
-          delay(5000);
-        } */
         targets[i].resistanceReadings[memArrayIndex] = analogRead(targets[i].analogPin);
       }
       memArrayIndex++;
     }
     else {   //do some logic on the past resistance readings
       memArrayIndex = 0;
-      for (int i = 0; i < 8; i++ ) {
+      for (int i = 0; i < 1; i++ ) {
 
-        
-        // Serial.println(targets[i].baselineRes);
+        Serial.println("baseline:");
+        Serial.println(targets[i].baselineRes);
+        for (int j = 0; j < sizeMemArray; ++j)
+        {
+          Serial.println(targets[i].resistanceReadings[j]);
+        }
         // String str1 = "target [";
         // String str2 = str1 + i;
-        // int x =targets[i].resistanceReadings[0]-targets[i].baselineRes;
+        // int x =targets[i].resistanceReadings[0];
         // String str3 = str2 + "]: " + x;
         // Serial.println(str3);
 
-
+        bool wasStretched = targets[i].stretched;
+        bool wasTouched = targets[i].touched;
         targets[i].stretched = false;
         targets[i].touched = false;
-        //if the resistance is over the high threshold, we have a stretch
+        int avRes = 0;
+        //The resistance may drop briefly after the release of a stretch, but it never jumps up oddly
+        //So we check for 1 high value for a stretch, and an AVERAGE low value for a touch
+
+        //also, since it drops and the touch is so sensitive, we need to recalibrate as soon as it stops being stretched
         for (int j = 0; j < sizeMemArray; ++j)
         {
-          if (targets[i].resistanceReadings[j] - targets[i].baselineRes > targets[i].highResInterval) {
+          int res = targets[i].resistanceReadings[j];
+          avRes += res;
+          //if the resistance is over the high threshold, we have a STRETCH
+          if ( res - targets[i].baselineRes > targets[i].highResInterval) {
             targets[i].stretched = true;
             targets[i].cyclesTouched = 0;
             targets[i].cyclesStretched++;
             targets[i].cyclesSinceRelease = 0;
+            break;
             // s = "target ";
             // s2 = s + i;
             // s = s2 + " stretched";
             // Serial.println(s);
           }
+          //once we've looked at all values and none are stretch, check if average is low (TOUCH)
+          if (j==sizeMemArray-1) { 
+            avRes /= sizeMemArray;
+            //if it was previously stretched, it will have just dropped and we should recalibrate
+            //but since the value will be rising, it will be impossible to get it to giggle if we set
+            //it at the avRes, so we add a buffer
+            if (wasStretched) {
+              targets[i].baselineRes = avRes+10;
+            }
+            else {
+              //wasn't just stretched.
+              //we get stuck giggling sometimes, so don't giggle twice in a row, recalibrate
+              if (wasTouched) {
+                targets[i].baselineRes = avRes;
+              }
+              //we check if resistance is low (if so we have a touch)
+              else if (targets[i].baselineRes - avRes > targets[i].lowResInterval) {
+                targets[i].touched = true;
+                targets[i].cyclesStretched = 0;
+                targets[i].cyclesTouched++;
+                targets[i].cyclesSinceRelease = 0;
+              }
+              //otherwise we might as well calibrate
+              //but here we might still be rising from post stretch recovery
+              else {
+                if (avRes > targets[i].baselineRes + 5)
+                {
+                  targets[i].baselineRes = avRes + 10; //try to stay ahead of the rebound
+                }
+                targets[i].baselineRes = avRes; //otherwise, this is probably just a normal flux
+              }
+            }
+          }
         } 
 
-        //if it wasn't just stretched, maybe we have a gentle touch
-        if (!targets[i].stretched) {
-          for (int j = 0; j < sizeMemArray; ++j)
-          {
-            if (targets[i].baselineRes - targets[i].resistanceReadings[j] > targets[i].lowResInterval) {
-              targets[i].touched = true;
-              targets[i].cyclesStretched = 0;
-              targets[i].cyclesTouched++;
-              targets[i].cyclesSinceRelease = 0;
-
-            }
-          } 
-        }
+        // //TOUCH if it wasn't just stretched, maybe we have a gentle touch
+        // if (!targets[i].stretched) {
+        //   for (int j = 0; j < sizeMemArray; ++j)
+        //   {
+        //     if (targets[i].baselineRes - targets[i].resistanceReadings[j] > targets[i].lowResInterval) {
+        //       targets[i].touched = true;
+        //       targets[i].cyclesStretched = 0;
+        //       targets[i].cyclesTouched++;
+        //       targets[i].cyclesSinceRelease = 0;
+        //       break;
+        //     }
+        //   } 
+        // }
 
         //if not touched or stretched, let's calibrate
-        if (!targets[i].touched && !targets[i].stretched) {
-          targets[i].cyclesTouched = targets[i].cyclesStretched = 0;
-          if (targets[i].cyclesSinceRelease++ > 20) {
-            recalibrateTarget(targets[i]);
-          }
-        }
+        // if (!targets[i].touched && !targets[i].stretched) {
+        //   targets[i].cyclesTouched = targets[i].cyclesStretched = 0;
+        //   if (targets[i].cyclesSinceRelease++ > 20) {
+        //     recalibrateTarget(targets[i]);
+        //   }
+        // }
 
         // if a target has been giggling or bo'inging for too long, recalibrate it
         if(targets[i].cyclesTouched >= 20 || targets[i].cyclesStretched >= 20) {
@@ -171,45 +208,7 @@ void TextileSensor::updateTargetArray() {
       }
 
    }
-
-  
-
- // delay(500);
- // Serial.println();
-
 }
-//      //digitalWrite(A15, 255);
-//      double temp_resistance = analogRead(targets[i].analogPin);
-//      if(((temp_resistance - targets[i].resistanceReading) / targets[i].resistanceReading) > diff_resistance) {
-//        targets[i].stretched = true;
-//      }
-//      else {
-//        targets[i].stretched = false;
-//      }
-//    }
-//    else {
-//      targets[i].touched = false;
-//      //digitalWrite(A15, 255);
-//      targets[i].resistanceReading = analogRead(targets[i].analogPin);
-//    }
-
-
-
-
-
-////    // check sounds
-////    targets[i].sounds[0].updateIsPlaying();
-////    targets[i].sounds[1].updateIsPlaying();
-////      Serial.println(targets[i].touched);
-////      Serial.println(targets[i].stretched);
-//      Serial.println(temp);
-//      Serial.println(targets[i].touched);
-//      Serial.println(targets[i].stretched);
-
-  //  }
-  
-  
-
 
 // if both (or the one) target(s) that is blinking is being touched, return true
 // otherwise return false

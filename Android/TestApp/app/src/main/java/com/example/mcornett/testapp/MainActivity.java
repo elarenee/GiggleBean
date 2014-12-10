@@ -19,15 +19,16 @@ package com.example.mcornett.testapp;
         import android.util.Log;
         import android.view.View;
         import android.view.View.OnClickListener;
-        import android.widget.Button;
         import android.widget.ImageButton;
-        import android.widget.MediaController;
+        import android.content.Context;
+
         import android.widget.Toast;
+        import android.content.IntentFilter;
 
 public class MainActivity extends Activity {
     private static final String TAG = "bluetooth1";
 
-    ImageButton btnOn, btnOff, restart, reset;
+    ImageButton btnOn, btnOff, restart, reset, endGame;
     Handler handler;
     final int RECIEVE_MESSAGE = 1;
     private BluetoothAdapter btAdapter = null;
@@ -43,9 +44,14 @@ public class MainActivity extends Activity {
     private  MediaPlayer boing;
     private  MediaPlayer giggle;
     private boolean mute = false;
+    private boolean isOff = false;
+    IntentFilter filter1 = new IntentFilter(BluetoothDevice.ACTION_ACL_CONNECTED);
+    IntentFilter filter2 = new IntentFilter(BluetoothDevice.ACTION_ACL_DISCONNECT_REQUESTED);
+    IntentFilter filter3 = new IntentFilter(BluetoothDevice.ACTION_ACL_DISCONNECTED);
+//    this.registerReceiver(mReceiver, filter1);
+//    this.registerReceiver(mReceiver, filter2);
+//    this.registerReceiver(mReceiver, filter3);
 
-
-    public static final String LOG_TAG = "myLogs";
 
     // SPP UUID service
     private static final UUID MY_UUID = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB");
@@ -54,71 +60,7 @@ public class MainActivity extends Activity {
     private static String address = "98:D3:31:30:0C:5C";
 
     /** Called when the activity is first created. */
-    @Override
-//    public void onCreate(Bundle savedInstanceState) {
-//        super.onCreate(savedInstanceState);
-//
-//        setContentView(R.layout.activity_main);
-//
-//        btnOn = (ImageButton) findViewById(R.id.btnOn);
-//        btnOff = (ImageButton) findViewById(R.id.btnOff);
-//        restart = (ImageButton) findViewById(R.id.restart);
-//        m1 = MediaPlayer.create(getBaseContext(), R.raw.douglass);
-//        m2 = MediaPlayer.create(getBaseContext(), R.raw.ears);
-//        m3 = MediaPlayer.create(getBaseContext(), R.raw.wheels);
-//        boing = MediaPlayer.create(getBaseContext(), R.raw.boing);
-//        giggle = MediaPlayer.create(getBaseContext(), R.raw.giggles);
-//
-//        handler = new Handler() {
-//            public void handleMessage(android.os.Message msg) {
-//                switch (msg.what) {
-//                    case RECIEVE_MESSAGE:                                                   // if receive massage
-//                        byte[] readBuf = (byte[]) msg.obj;
-//                        String strIncom = new String(readBuf, 0, msg.arg1);                 // create string from bytes array
-//                        sb.append(strIncom);                                                // append string
-//                        int endOfLineIndex = sb.indexOf("\r\n");                            // determine the end-of-line
-//                        if (endOfLineIndex > 0) {                                            // if end-of-line,
-//
-//                            String sbprint = sb.substring(0, endOfLineIndex).toString();
-//                            Log.d(LOG_TAG, sbprint);
-//                            if (sbprint.equals("222")){
-//                                Toast.makeText(getBaseContext(), "Connected", Toast.LENGTH_LONG).show();
-//                                m1.start();
-//
-//
-//                                //if( !m1.isPlaying() && !m2.isPlaying() && !m3.isPlaying()) {
-//
-//                               // }
-////                                else {
-////                                    mConnectedThread.write("212");
-////                                }
-//                            }
-//                            else if (sbprint.equals("333")){
-//                              if(!m1.isPlaying() && !m2.isPlaying() && !m3.isPlaying()) {
-//                                  m2.start();
-//                              }
-////                              else if (!boing.isPlaying()){
-////                                  mConnectedThread.write("212");
-////                              }
-//                            }
-//                             else if (sbprint.equals("444")) {
-//                                if (!m1.isPlaying() && !m2.isPlaying() && !m3.isPlaying()) {
-//                                    m3.start();
-//                                }
-////                                else if (!boing.isPlaying()){
-////                                    mConnectedThread.write("212");
-////                                }
-//                            }
-//
-//                            sb.delete(0, sb.length());                                      // and clear
-//                            btnOff.setEnabled(true);
-//                            btnOn.setEnabled(true);
-//                        }
-//                        //Log.d(TAG, "...String:"+ sb.toString() +  "Byte:" + msg.arg1 + "...");
-//                        break;
-//                }
-//            };
-//        };
+
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
@@ -126,10 +68,13 @@ public class MainActivity extends Activity {
         m1 = MediaPlayer.create(getBaseContext(), R.raw.douglass);
         m2 = MediaPlayer.create(getBaseContext(), R.raw.ears);
         m3 = MediaPlayer.create(getBaseContext(), R.raw.wheels);
+        giggle = MediaPlayer.create(getBaseContext(), R.raw.giggles);
+        boing = MediaPlayer.create(getBaseContext(), R.raw.boing);
         btnOn = (ImageButton) findViewById(R.id.btnOn);
         btnOff = (ImageButton) findViewById(R.id.btnOff);
         restart = (ImageButton) findViewById(R.id.restart);
         reset = (ImageButton) findViewById(R.id.reset);
+        endGame = (ImageButton) findViewById(R.id.endGame);
 
         handler = new Handler() {
 
@@ -140,22 +85,49 @@ public class MainActivity extends Activity {
                         byte[] readBuf = (byte[]) msg.obj;
                         String strIncom = new String(readBuf, 0, msg.arg1);                 // create string from bytes array
                         sb.append(strIncom);                                                // append string
+                        Log.d(TAG, sb.toString());
+
+
                         int endOfLineIndex = sb.indexOf("\r\n");                            // determine the end-of-line
                         if (endOfLineIndex > 0) {                                            // if end-of-line,
 
                             if (sb.charAt(0) == 'a') {
-                                if (!m1.isPlaying() && !m2.isPlaying() && !m3.isPlaying())
+                                if (!m1.isPlaying() && !m2.isPlaying() && !m3.isPlaying()) {
                                     m1.start();
+                                    //mConnectedThread.write("zzz");
+                                } else if (!giggle.isPlaying()){
+                                    giggle.start();
+                                }
                             }
                             else if (sb.charAt(0) == 'b') {
-                                if (!m1.isPlaying() && !m2.isPlaying() && !m3.isPlaying())
+                                if (!m1.isPlaying() && !m2.isPlaying() && !m3.isPlaying()) {
                                     m2.start();
+                                    //mConnectedThread.write("zzz");
+                                }else if (!giggle.isPlaying()){
+                                    giggle.start();
+                                }
                             }
                             else if (sb.charAt(0) == 'c') {
-                                if (!m1.isPlaying() && !m2.isPlaying() && !m3.isPlaying())
+                                if (!m1.isPlaying() && !m2.isPlaying() && !m3.isPlaying()) {
                                     m3.start();
+                                    //mConnectedThread.write("zzz");
+                                }else if (!giggle.isPlaying()){
+                                    giggle.start();
+                                }
                             }
-
+//                            else if (sb.charAt(0) == 'g') {
+//                                if (!giggle.isPlaying()) {
+//                                    giggle.start();
+//                                    m1.start();
+//                                    //mConnectedThread.write("iii");
+//                                }
+//                            }
+//                            else if (sb.charAt(0) == 'h') {
+//                                if (!boing.isPlaying()) {
+//                                    boing.start();
+//                                    //mConnectedThread.write("jjj");
+//                                }
+//                            }
                             sb.delete(0, sb.length());                                      // and clear
                             btnOff.setEnabled(true);
                             btnOn.setEnabled(true);
@@ -167,44 +139,66 @@ public class MainActivity extends Activity {
         btAdapter = BluetoothAdapter.getDefaultAdapter();
         checkBTState();
 
+
+        endGame.setOnClickListener(new OnClickListener() {
+            public void onClick(View v) {
+
+                if (!isOff) {
+                    m1.setVolume(0, 0);
+                    m2.setVolume(0, 0);
+                    m3.setVolume(0, 0);
+                    boing.setVolume(0,0);
+                    giggle.setVolume(0,0);
+                    isOff = true;
+                    mConnectedThread.write("ooo");
+                }
+            }
+        });
+
         btnOn.setOnClickListener(new OnClickListener() {
             public void onClick(View v) {
-                mConnectedThread.write("000");
+                Log.d(TAG, "lights on off");
+                if (!isOff) {
+                    mConnectedThread.write("000");
+                }
             }
         });
 
         reset.setOnClickListener(new OnClickListener() {
             public void onClick(View v) {
                 mConnectedThread.write("qqq");
+                isOff = false;
             }
         });
 
         btnOff.setOnClickListener(new OnClickListener() {
             public void onClick(View v) {
-                mute = !mute;
+                if (!isOff) {
+                    mute = !mute;
 
-                if (mute){
-                    m1.setVolume(0,0);
-                    m2.setVolume(0,0);
-                    m3.setVolume(0,0);
-                    //boing.setVolume(0,0);
-                    //giggle.setVolume(0,0);
-                } else {
-                    m1.setVolume(1,1);
-                    m2.setVolume(1,1);
-                    m3.setVolume(1,1);
-                    //boing.setVolume(1,1);
-                    //giggle.setVolume(1,1);
+                    if (mute) {
+                        m1.setVolume(0, 0);
+                        m2.setVolume(0, 0);
+                        m3.setVolume(0, 0);
+                        boing.setVolume(0,0);
+                        giggle.setVolume(0,0);
+                    } else {
+                        m1.setVolume(1, 1);
+                        m2.setVolume(1, 1);
+                        m3.setVolume(1, 1);
+                        boing.setVolume(1,1);
+                        giggle.setVolume(1,1);
+                    }
+
+                    mConnectedThread.write("111");
                 }
-
-                mConnectedThread.write("111");
 
             }
         });
 
         m1.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
             public void onCompletion(MediaPlayer mp) {
-                mConnectedThread.write("zzzz");
+                mConnectedThread.write("zzz");
             }
         });
         m2.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
@@ -217,7 +211,16 @@ public class MainActivity extends Activity {
                 mConnectedThread.write("zzz");
             }
         });
-
+        giggle.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+            public void onCompletion(MediaPlayer mp) {
+                mConnectedThread.write("GGG");
+            }
+        });
+        boing.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+            public void onCompletion(MediaPlayer mp) {
+                mConnectedThread.write("HHH");
+            }
+        });
         restart.setOnClickListener(new OnClickListener() {
             public void onClick(View v) {
 
@@ -325,7 +328,27 @@ public class MainActivity extends Activity {
             errorExit("Fatal Error", "In onPause() and failed to close socket." + e2.getMessage() + ".");
         }
     }
-
+//    @Override
+//    public void onReceive(Context context, Intent intent) {
+//        String action = intent.getAction();
+//        BluetoothDevice device = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
+//
+//        if (BluetoothDevice.ACTION_FOUND.equals(action)) {
+//            //Device found
+//        }
+//        else if (BluetoothDevice.ACTION_ACL_CONNECTED.equals(action)) {
+//            //Device is now connected
+//        }
+//        else if (BluetoothAdapter.ACTION_DISCOVERY_FINISHED.equals(action)) {
+//            //Done searching
+//        }
+//        else if (BluetoothDevice.ACTION_ACL_DISCONNECT_REQUESTED.equals(action)) {
+//            //Device is about to disconnect
+//        }
+//        else if (BluetoothDevice.ACTION_ACL_DISCONNECTED.equals(action)) {
+//            //Device has disconnected
+//        }
+//    }
     private void checkBTState() {
         // Check for Bluetooth support and then check to make sure it is turned on
         // Emulator doesn't support Bluetooth and will return null

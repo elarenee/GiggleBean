@@ -9,68 +9,107 @@
     <TableLayout
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:layout_alignLeft="@+id/restart"
         android:layout_alignStart="@+id/restart"
         android:layout_alignParentBottom="true">
 
-        <ImageButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="LED&apos;s On"
-            android:id="@+id/btnOn"
-            android:layout_gravity="left"
-            android:background="@drawable/lightsbtn"
-            android:layout_centerVertical="true"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_marginLeft="400dp"
-            android:layout_marginTop="250dp"
-            android:layout_marginRight="400dp"
-            android:layout_marginBottom="10dp" />
-
-        <ImageButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Sound Off"
-            android:id="@+id/btnOff"
-            android:background="@drawable/soundsbtn"
-            android:clickable="true"
-            android:layout_centerVertical="true"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true"
-            android:layout_marginRight="400dp"
-            android:layout_marginLeft="400dp"
-            android:layout_marginTop="0dp"
-            android:layout_marginBottom="10dp" />
-
-        <ImageButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Restart"
-            android:id="@+id/restart"
-            android:background="@drawable/resetbtn"
-            android:layout_alignParentBottom="true"
-            android:layout_alignRight="@+id/reset"
-            android:layout_alignEnd="@+id/reset"
-            android:layout_marginBottom="10dp"
-            android:layout_marginTop="0dp"
-            android:layout_marginLeft="400dp"
-            android:layout_marginRight="400dp" />
-
-        <ImageButton
+        <TableRow
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:text="Reset System"
-            android:id="@+id/reset"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="0dp"
-            android:layout_marginLeft="400dp"
-            android:layout_marginRight="400dp"
-            android:layout_marginBottom="10dp"
-            android:layout_gravity="center_horizontal|right"
-            android:textAlignment="center"
-            android:textSize="@dimen/activity_horizontal_margin"
-            android:background="@drawable/resetbtn" />
+            android:layout_height="fill_parent">
+
+        </TableRow>
+
+        <TableRow
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent">
+
+            <ImageButton
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="LED&apos;s On"
+                android:id="@+id/btnOn"
+                android:layout_gravity="bottom|left"
+                android:background="@drawable/lightsbtn"
+                android:layout_centerVertical="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_marginTop="250dp"
+                android:layout_marginRight="0dp"
+                android:layout_marginBottom="15dp"
+                android:layout_column="5"
+                android:layout_marginLeft="200dp" />
+
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Sound Off"
+                android:id="@+id/btnOff"
+                android:background="@drawable/soundsbtn"
+                android:clickable="true"
+                android:layout_centerVertical="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginRight="200dp"
+                android:layout_marginLeft="0dp"
+                android:layout_marginTop="250dp"
+                android:layout_marginBottom="15dp"
+                android:layout_column="20" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent">
+
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Restart"
+                android:id="@+id/restart"
+                android:background="@drawable/resetbtn"
+                android:layout_alignParentBottom="true"
+                android:layout_alignRight="@+id/reset"
+                android:layout_alignEnd="@+id/reset"
+                android:layout_marginBottom="15dp"
+                android:layout_marginTop="0dp"
+                android:layout_marginLeft="200dp"
+                android:layout_marginRight="0dp"
+                android:layout_column="5" />
+
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Reset System"
+                android:id="@+id/reset"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="0dp"
+                android:layout_marginLeft="200dp"
+                android:layout_marginRight="0dp"
+                android:layout_marginBottom="15dp"
+                android:textAlignment="center"
+                android:textSize="@dimen/activity_horizontal_margin"
+                android:background="@drawable/resetbtn"
+                android:layout_column="20" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent">
+
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/endGame"
+                android:layout_column="20"
+                android:background="@drawable/resetbtn"
+                android:layout_marginLeft="200dp"
+                android:layout_marginTop="0dp"
+                android:layout_marginBottom="15dp" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent">
+
+        </TableRow>
 
     </TableLayout>
 

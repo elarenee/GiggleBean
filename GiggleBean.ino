@@ -56,7 +56,6 @@
   void loop() {
     //Get Messages from Android
     if (Serial.available()){
-      Serial.print(Serial.read());
       for (int i = 0;i < 3;i++){
         inputChar = Serial.read();
         serialMessage[i] = inputChar;
@@ -72,9 +71,9 @@
         memset(serialMessage, -1, sizeof(serialMessage));
         index = 0;
       }
-      else if (!strcmp(serialMessage, "212")){ //OnComplete for Any Song Ending
+      else if (serialMessage[0] == 'z'){ //OnComplete for Any Song Ending
         //if the song has just ended, we just shuffle and blink
-        Serial.println("test");
+        
         songJustEnded = true;
         dj.songIsPlaying = false;
         memset(serialMessage, -1, sizeof(serialMessage));
@@ -107,9 +106,9 @@
 //        loopsLeftToCalibrate = totalLoopsToCalibrate;
 //        leds.turnLightsOff();
 //      }
-    } 
     else {
       index = 0;
+    }
     }
     //Check touches and send messages to Android
     if (textile.calibrated(loopsLeftToCalibrate, totalLoopsToCalibrate)) {
@@ -161,6 +160,8 @@
         //delay(5000);
       }
     }
+
+    
   }
     
   

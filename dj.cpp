@@ -7,13 +7,13 @@ void DJ::determineSong(LightCombo currBlinkCombo) {
         int track_idx = currBlinkCombo.getTrackIndex();
         switch (track_idx) {
             case 0:
-                Serial.println("222"); //222
+                Serial.println("a"); //222
                 break;
             case 1:
-                Serial.println("333"); //333
+                Serial.println("b"); //333
                 break;
             case 2:
-                Serial.println("444"); //444
+                Serial.println("c"); //444
         }
     }
 }

@@ -6,7 +6,7 @@
 #include <CapacitiveSensor.h>
 #include <Arduino.h>
 
-static const int defaultHighResInterval = 50;
+static const int defaultHighResInterval = 15;
 static const int defaultLowResInterval = 5;
 
 //we store the past N values for resistance reading

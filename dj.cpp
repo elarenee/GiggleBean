@@ -50,7 +50,7 @@ void DJ::determineSound(Target targets[]) {
 
             //play bo'ing if stretch
             if(targets[i].stretched) {
-               //Serial.println("Bo'ing"); //321
+               Serial.println("f"); //321
 
 
         // Serial.println(targets[i].baselineRes);

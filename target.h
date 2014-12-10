@@ -42,7 +42,6 @@ struct Target {
 
   int cyclesStretched;
   int cyclesTouched; 
-  //Track sounds[2];
   
 };
 

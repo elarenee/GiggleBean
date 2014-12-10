@@ -83,19 +83,15 @@
         software_Reset();
         delay(5000);
       }
-      else if (!strcmp(serialMessage, "001")){ //Restarting BlueTooth
+      else if (serialMessage[0] == 'w'){ //Restarting BlueTooth
         //Let's slowly blink all lights so the bean seems inactive but still on
         bluetoothResetting = true;
         leds.makeWholeBeanBlink();
         memset(serialMessage, -1, sizeof(serialMessage));
         index = 0;
       }
-      else if (!strcmp(serialMessage, "002")){ //BlueTooth Successfully Restarted
-        //Get back to playing
-        bluetoothResetting = false;
-        leds.makeBlink();
-        memset(serialMessage, -1, sizeof(serialMessage));
-        index = 0;
+      else if (serialMessage[0] == 'o'){ //end game
+        leds.lightModeOn = false;
       }
       else if (!strcmp(serialMessage, "555")){ //App Turned Off
         //TODO what goes here?
@@ -154,6 +150,7 @@
            //   Serial.println("all blinking targets stretched");
             }
           }
+          dj.determineSound(textile.targets);
         }
         // Check Sound.
         else {

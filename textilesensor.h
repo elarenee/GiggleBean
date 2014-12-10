@@ -28,7 +28,7 @@ static  int analogPinR1 = A3;								//Red Touch
 static  int analogPinR2 = A4;								//Red Touch
 static  int analogPinR3 = A5;								//Red Touch
 
-static  int analogPinY1 = A6;								//Yellow Touch
+static  int analogPinY1 = A10;								//Yellow Touch
 static  int analogPinY2 = A7;								//Yellow Touch
 
 //Global Pins that supply voltage for Analog Input

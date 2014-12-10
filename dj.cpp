@@ -7,13 +7,13 @@ void DJ::determineSong(LightCombo currBlinkCombo) {
         int track_idx = currBlinkCombo.getTrackIndex();
         switch (track_idx) {
             case 0:
-                Serial.println("PLAY RED"); //222
+                Serial.println("222"); //222
                 break;
             case 1:
-                Serial.println("PLAY BLUE"); //333
+                Serial.println("333"); //333
                 break;
             case 2:
-                Serial.println("PLAY GREEN"); //444
+                Serial.println("444"); //444
         }
     }
 }
@@ -39,7 +39,7 @@ void DJ::determineSound(Target targets[]) {
         for(int i = 0; i < 8; i++) {
             //play giggle if soft touch
             if (targets[i].touched) {
-               Serial.println("Giggle"); //123
+               //Serial.println("Giggle"); //123
 
         // Serial.println(targets[i].baselineRes);
         // String str1 = "target [";
@@ -50,7 +50,7 @@ void DJ::determineSound(Target targets[]) {
 
             //play bo'ing if stretch
             if(targets[i].stretched) {
-               Serial.println("Bo'ing"); //321
+               //Serial.println("Bo'ing"); //321
 
 
         // Serial.println(targets[i].baselineRes);

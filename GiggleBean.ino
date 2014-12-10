@@ -56,6 +56,7 @@
   void loop() {
     //Get Messages from Android
     if (Serial.available()){
+      Serial.print(Serial.read());
       for (int i = 0;i < 3;i++){
         inputChar = Serial.read();
         serialMessage[i] = inputChar;
@@ -66,45 +67,46 @@
         memset(serialMessage, -1, sizeof(serialMessage));
         index = 0;
       } 
-      if (!strcmp(serialMessage, "111")){ //Sound ON/OFF Pressed
+      else if (!strcmp(serialMessage, "111")){ //Sound ON/OFF Pressed
         dj.soundModeOn = !dj.soundModeOn;
         memset(serialMessage, -1, sizeof(serialMessage));
         index = 0;
       }
-      if (!strcmp(serialMessage, "222")){ //OnComplete for Any Song Ending
+      else if (!strcmp(serialMessage, "212")){ //OnComplete for Any Song Ending
         //if the song has just ended, we just shuffle and blink
+        Serial.println("test");
         songJustEnded = true;
         dj.songIsPlaying = false;
         memset(serialMessage, -1, sizeof(serialMessage));
         index = 0;
       }
-      if (!strcmp(serialMessage, "001")){ //Restarting BlueTooth
+      else if (!strcmp(serialMessage, "001")){ //Restarting BlueTooth
         //Let's slowly blink all lights so the bean seems inactive but still on
         bluetoothResetting = true;
         leds.makeWholeBeanBlink();
         memset(serialMessage, -1, sizeof(serialMessage));
         index = 0;
       }
-      if (!strcmp(serialMessage, "002")){ //BlueTooth Successfully Restarted
+      else if (!strcmp(serialMessage, "002")){ //BlueTooth Successfully Restarted
         //Get back to playing
         bluetoothResetting = false;
         leds.makeBlink();
         memset(serialMessage, -1, sizeof(serialMessage));
         index = 0;
       }
-      if (!strcmp(serialMessage, "555")){ //App Turned Off
+      else if (!strcmp(serialMessage, "555")){ //App Turned Off
         //TODO what goes here?
         memset(serialMessage, -1, sizeof(serialMessage));
         index = 0;
       }
-      if (!strcmp(serialMessage, "132")){ //Currently not implemented
-      delay(5000);
-        Serial.println("Re-Calibrate");
-        memset(serialMessage, -1, sizeof(serialMessage));
-        index = 0;
-        loopsLeftToCalibrate = totalLoopsToCalibrate;
-        leds.turnLightsOff();
-      }
+//      if (!strcmp(serialMessage, "132")){ //Currently not implemented
+//      delay(5000);
+//        Serial.println("Re-Calibrate");
+//        memset(serialMessage, -1, sizeof(serialMessage));
+//        index = 0;
+//        loopsLeftToCalibrate = totalLoopsToCalibrate;
+//        leds.turnLightsOff();
+//      }
     } 
     else {
       index = 0;
@@ -123,6 +125,8 @@
       else */if (songJustEnded) {
         //in this case, we want to act on what's happening, then shuffle
         //so we don't get any accidental songs playing
+        
+        songJustEnded = false;
         dj.determineSound(textile.targets);
         leds.shuffleBlinkingLEDs();
         leds.makeBlink();
@@ -136,6 +140,7 @@
           if(!dj.songIsPlaying) {
             // Play Song
             if (!leds.lightModeOn) {
+              Serial.println("leds on");
               //if lights aren't on, triggering a song would be an accident
               songJustEnded = true; //this will make the lights shuffle on the next loop
             }

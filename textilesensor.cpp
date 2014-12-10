@@ -9,7 +9,7 @@ TextileSensor::TextileSensor() {
  	targets[2] = Target( ledPinB3, analogPinB3, defaultLowResInterval, defaultHighResInterval);
  	targets[3] = Target( ledPinR1, analogPinR1, defaultLowResInterval, defaultHighResInterval);
   	targets[4] = Target( ledPinR2, analogPinR2, defaultLowResInterval, defaultHighResInterval); 
-  	targets[5] = Target( ledPinR3, analogPinR3, defaultLowResInterval, defaultHighResInterval); 
+  	targets[5] = Target( ledPinR3, analogPinR3, defaultLowResInterval, 15); 
   	targets[6] = Target( ledPinY1, analogPinY1, defaultLowResInterval, defaultHighResInterval);
   	targets[7] = Target( ledPinY2, analogPinY2, defaultLowResInterval, defaultHighResInterval);   		
 } 
@@ -82,23 +82,26 @@ void TextileSensor::updateTargetArray() {
 //    Serial.println("baseline:");
 //    Serial.println(targets[7].baselineRes);
 //    delay(200);
-    
+     
     if (memArrayIndex < sizeMemArray) { // read in values
       for (int i = 0; i < 8; i++ ) {
         targets[i].resistanceReadings[memArrayIndex] = analogRead(targets[i].analogPin);
+        //Serial.println("baseline:");
+       ;
+        
       }
       memArrayIndex++;
     }
     else {   //do some logic on the past resistance readings
       memArrayIndex = 0;
-      for (int i = 0; i < 1; i++ ) {
+      for (int i = 0; i < 8; i++ ) {
 
-        Serial.println("baseline:");
-        Serial.println(targets[i].baselineRes);
-        for (int j = 0; j < sizeMemArray; ++j)
-        {
-          Serial.println(targets[i].resistanceReadings[j]);
-        }
+//        Serial.println("baseline:");
+//        Serial.println(targets[i].baselineRes);
+//        for (int j = 0; j < sizeMemArray; ++j)
+//        {
+//          Serial.println(targets[i].resistanceReadings[j]);
+//        }
         // String str1 = "target [";
         // String str2 = str1 + i;
         // int x =targets[i].resistanceReadings[0];
@@ -197,6 +200,7 @@ void TextileSensor::updateTargetArray() {
 
         
         //FOR TESTING
+       
     //Serial.println(targets[i].touched);
     //Serial.println(targets[i].stretched);
     //Serial.println(i);
@@ -206,7 +210,7 @@ void TextileSensor::updateTargetArray() {
     // String str3 = str2 + "]: " + targets[i].resistanceReadings[0]+ targets[i].resistanceReadings[1]+ targets[i].resistanceReadings[2];
     // Serial.println(str3);
       }
-
+    //Serial.println(analogRead(targets[7].analogPin));
    }
 }
 

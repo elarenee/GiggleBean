@@ -1,52 +1,64 @@
 #include "dj.h"
 
-void DJ::determineSong(LightCombo currBlinkCombo, const Target targets[]) {
-  
-    int target1_idx = currBlinkCombo.target1Index;
-    
-    double pressure = targets[target1_idx].resistanceReading;
-    
-    int new_vol = speaker.convertPressureToVolume(pressure);
-    
-    int track_idx = currBlinkCombo.getTrackIndex();
-    
-    speaker.playTrack(new_vol, track_idx, Song);
-    
+
+
+void DJ::determineSong(LightCombo currBlinkCombo) {
+    if (soundModeOn) {
+        int track_idx = currBlinkCombo.getTrackIndex();
+        switch (track_idx) {
+            case 0:
+                Serial.println("a"); //222
+                break;
+            case 1:
+                Serial.println("b"); //333
+                break;
+            case 2:
+                Serial.println("c"); //444
+        }
+    }
 }
 
-void DJ::adjustVolume(LightCombo currBlinkCombo, const Target targets[]) {
+// void DJ::adjustVolume(LightCombo currBlinkCombo, const Target targets[]) {
   
-    int target1_idx = currBlinkCombo.target1Index;
+//     int target1_idx = currBlinkCombo.target1Index;
     
-    double pressure = targets[target1_idx].resistanceReading;
+//     double pressure = targets[target1_idx].resistanceReadings[sizeMemArray-1] -
+//                         targets[target1_idx].baselineRes;
      
-    int new_vol = speaker.convertPressureToVolume(pressure);
+//     int new_vol = speaker.convertPressureToVolume(pressure);
     
-    //this will send the new volume, but in order to specify that it is just increasing
-    // the volume for a second and not restarting a track, the second parameter should be -1
-    speaker.playTrack(new_vol, -1, Song);
+//     //this will send the new volume, but in order to specify that it is just increasing
+//     // the volume for a second and not restarting a track, the second parameter should be -1
+//     speaker.playTrack(Song, -1, new_vol);
     
-}
+// }
 
 void DJ::determineSound(Target targets[]) {
-  
-    for(int i = 0; i < 8; i++) {
-      
-       if(targets[i].touched && !targets[i].sounds[0].isPlaying && !targets[i].sounds[1].isPlaying) {
-         
-          int idx;
-          
-          // "hard" touch -> bo'ing
-          if(targets[i].resistanceReading >  PRESSURE_MIDLINE) 
-            idx = 1;
-          // "soft" touch -> giggle
-          else             
-           idx = 2; 
-          
-          int vol = speaker.defaultVolume; // there should be no volume regulation 
-          speaker.playTrack(vol, idx, Sound);
-          targets[i].sounds[idx].startTrack();
-          
-       }
-    }       
+    if (soundModeOn) {
+        //we can play at most 1 giggle and 1 bo'ing at a time
+        for(int i = 0; i < 8; i++) {
+            //play giggle if soft touch
+            if (targets[i].touched) {
+               //Serial.println("Giggle"); //123
+
+        // Serial.println(targets[i].baselineRes);
+        // String str1 = "target [";
+        // String str2 = str1 + i;
+        // String str3 = str2 + "]: " + targets[i].resistanceReadings[0]+ targets[i].resistanceReadings[1]+ targets[i].resistanceReadings[2];
+        // Serial.println(str3);
+            }
+
+            //play bo'ing if stretch
+            if(targets[i].stretched) {
+               //Serial.println("f"); //321
+
+
+        // Serial.println(targets[i].baselineRes);
+        // String str1 = "target [";
+        // String str2 = str1 + i;
+        // String str3 = str2 + "]: " + targets[i].resistanceReadings[0]+ targets[i].resistanceReadings[1]+ targets[i].resistanceReadings[2];
+        // Serial.println(str3);
+            }
+        }  
+    }   
 }

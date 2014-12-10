@@ -61,23 +61,27 @@
         serialMessage[i] = inputChar;
         serialMessage[i+1] = '\0';
       }
-      if (!strcmp(serialMessage, "000")){ //Lights ON/OFF Pressed
+      if (serialMessage[0] == '0'){ //Lights ON/OFF Pressed
         leds.lightModeOn = !leds.lightModeOn;
         memset(serialMessage, -1, sizeof(serialMessage));
         index = 0;
       } 
-      else if (!strcmp(serialMessage, "111")){ //Sound ON/OFF Pressed
+      else if (serialMessage[0] == '1'){ //Sound ON/OFF Pressed
         dj.soundModeOn = !dj.soundModeOn;
         memset(serialMessage, -1, sizeof(serialMessage));
         index = 0;
       }
       else if (serialMessage[0] == 'z'){ //OnComplete for Any Song Ending
         //if the song has just ended, we just shuffle and blink
-        
         songJustEnded = true;
         dj.songIsPlaying = false;
         memset(serialMessage, -1, sizeof(serialMessage));
         index = 0;
+      }
+      else if (serialMessage[0] == 'q'){ //Sound ON/OFF Pressed
+        leds.turnLightsOff();
+        software_Reset();
+        delay(5000);
       }
       else if (!strcmp(serialMessage, "001")){ //Restarting BlueTooth
         //Let's slowly blink all lights so the bean seems inactive but still on
@@ -163,5 +167,12 @@
 
     
   }
+  
+  void software_Reset(){
+  // Restarts program from beginning but 
+  // does not reset the peripherals and registers
+  asm volatile ("  jmp 0");  
+} 
+
     
   

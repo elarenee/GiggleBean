@@ -6,9 +6,6 @@ package com.example.mcornett.testapp;
         import java.io.OutputStream;
         import java.lang.reflect.Method;
         import java.util.UUID;
-        import java.util.Set;
-
-        import com.example.mcornett.testapp.R;
 
         import android.app.Activity;
         import android.bluetooth.BluetoothAdapter;
@@ -23,13 +20,14 @@ package com.example.mcornett.testapp;
         import android.view.View;
         import android.view.View.OnClickListener;
         import android.widget.Button;
+        import android.widget.ImageButton;
         import android.widget.MediaController;
         import android.widget.Toast;
 
 public class MainActivity extends Activity {
     private static final String TAG = "bluetooth1";
 
-    Button btnOn, btnOff, restart;
+    ImageButton btnOn, btnOff, restart, reset;
     Handler handler;
     final int RECIEVE_MESSAGE = 1;
     private BluetoothAdapter btAdapter = null;
@@ -47,6 +45,7 @@ public class MainActivity extends Activity {
     private boolean mute = false;
 
 
+    public static final String LOG_TAG = "myLogs";
 
     // SPP UUID service
     private static final UUID MY_UUID = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB");
@@ -56,55 +55,111 @@ public class MainActivity extends Activity {
 
     /** Called when the activity is first created. */
     @Override
+//    public void onCreate(Bundle savedInstanceState) {
+//        super.onCreate(savedInstanceState);
+//
+//        setContentView(R.layout.activity_main);
+//
+//        btnOn = (ImageButton) findViewById(R.id.btnOn);
+//        btnOff = (ImageButton) findViewById(R.id.btnOff);
+//        restart = (ImageButton) findViewById(R.id.restart);
+//        m1 = MediaPlayer.create(getBaseContext(), R.raw.douglass);
+//        m2 = MediaPlayer.create(getBaseContext(), R.raw.ears);
+//        m3 = MediaPlayer.create(getBaseContext(), R.raw.wheels);
+//        boing = MediaPlayer.create(getBaseContext(), R.raw.boing);
+//        giggle = MediaPlayer.create(getBaseContext(), R.raw.giggles);
+//
+//        handler = new Handler() {
+//            public void handleMessage(android.os.Message msg) {
+//                switch (msg.what) {
+//                    case RECIEVE_MESSAGE:                                                   // if receive massage
+//                        byte[] readBuf = (byte[]) msg.obj;
+//                        String strIncom = new String(readBuf, 0, msg.arg1);                 // create string from bytes array
+//                        sb.append(strIncom);                                                // append string
+//                        int endOfLineIndex = sb.indexOf("\r\n");                            // determine the end-of-line
+//                        if (endOfLineIndex > 0) {                                            // if end-of-line,
+//
+//                            String sbprint = sb.substring(0, endOfLineIndex).toString();
+//                            Log.d(LOG_TAG, sbprint);
+//                            if (sbprint.equals("222")){
+//                                Toast.makeText(getBaseContext(), "Connected", Toast.LENGTH_LONG).show();
+//                                m1.start();
+//
+//
+//                                //if( !m1.isPlaying() && !m2.isPlaying() && !m3.isPlaying()) {
+//
+//                               // }
+////                                else {
+////                                    mConnectedThread.write("212");
+////                                }
+//                            }
+//                            else if (sbprint.equals("333")){
+//                              if(!m1.isPlaying() && !m2.isPlaying() && !m3.isPlaying()) {
+//                                  m2.start();
+//                              }
+////                              else if (!boing.isPlaying()){
+////                                  mConnectedThread.write("212");
+////                              }
+//                            }
+//                             else if (sbprint.equals("444")) {
+//                                if (!m1.isPlaying() && !m2.isPlaying() && !m3.isPlaying()) {
+//                                    m3.start();
+//                                }
+////                                else if (!boing.isPlaying()){
+////                                    mConnectedThread.write("212");
+////                                }
+//                            }
+//
+//                            sb.delete(0, sb.length());                                      // and clear
+//                            btnOff.setEnabled(true);
+//                            btnOn.setEnabled(true);
+//                        }
+//                        //Log.d(TAG, "...String:"+ sb.toString() +  "Byte:" + msg.arg1 + "...");
+//                        break;
+//                }
+//            };
+//        };
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_main);
-
-        btnOn = (Button) findViewById(R.id.btnOn);
-        btnOff = (Button) findViewById(R.id.btnOff);
-        restart = (Button) findViewById(R.id.restart);
         m1 = MediaPlayer.create(getBaseContext(), R.raw.douglass);
         m2 = MediaPlayer.create(getBaseContext(), R.raw.ears);
         m3 = MediaPlayer.create(getBaseContext(), R.raw.wheels);
-        boing = MediaPlayer.create(getBaseContext(), R.raw.boing);
-        giggle = MediaPlayer.create(getBaseContext(), R.raw.giggles);
+        btnOn = (ImageButton) findViewById(R.id.btnOn);
+        btnOff = (ImageButton) findViewById(R.id.btnOff);
+        restart = (ImageButton) findViewById(R.id.restart);
+        reset = (ImageButton) findViewById(R.id.reset);
 
         handler = new Handler() {
+
             public void handleMessage(android.os.Message msg) {
                 switch (msg.what) {
                     case RECIEVE_MESSAGE:                                                   // if receive massage
+
                         byte[] readBuf = (byte[]) msg.obj;
                         String strIncom = new String(readBuf, 0, msg.arg1);                 // create string from bytes array
                         sb.append(strIncom);                                                // append string
                         int endOfLineIndex = sb.indexOf("\r\n");                            // determine the end-of-line
                         if (endOfLineIndex > 0) {                                            // if end-of-line,
 
-                            String sbprint = sb.substring(0, endOfLineIndex).toString();
-                            if (sbprint.equals("222")){
-                                if( !m1.isPlaying() && !m2.isPlaying() && !m3.isPlaying()) {
+                            if (sb.charAt(0) == 'a') {
+                                if (!m1.isPlaying() && !m2.isPlaying() && !m3.isPlaying())
                                     m1.start();
-                                } else if (!boing.isPlaying()){
-                                    boing.start();
-                                }
-                            } else if (sbprint.equals("333")){
-                              if(!m1.isPlaying() && !m2.isPlaying() && !m3.isPlaying()) {
-                                  m2.start();
-                              }else if (!boing.isPlaying()){
-                                  boing.start();
-                              }
-                            } else if (sbprint.equals("444")) {
-                                if (!m1.isPlaying() && !m2.isPlaying() && !m3.isPlaying()) {
-                                    m3.start();
-                                }else if (!boing.isPlaying()){
-                                    boing.start();
-                                }
                             }
+                            else if (sb.charAt(0) == 'b') {
+                                if (!m1.isPlaying() && !m2.isPlaying() && !m3.isPlaying())
+                                    m2.start();
+                            }
+                            else if (sb.charAt(0) == 'c') {
+                                if (!m1.isPlaying() && !m2.isPlaying() && !m3.isPlaying())
+                                    m3.start();
+                            }
+
                             sb.delete(0, sb.length());                                      // and clear
                             btnOff.setEnabled(true);
                             btnOn.setEnabled(true);
                         }
-                        //Log.d(TAG, "...String:"+ sb.toString() +  "Byte:" + msg.arg1 + "...");
                         break;
                 }
             };
@@ -114,8 +169,13 @@ public class MainActivity extends Activity {
 
         btnOn.setOnClickListener(new OnClickListener() {
             public void onClick(View v) {
-                //btnOn.setEnabled(false);
                 mConnectedThread.write("000");
+            }
+        });
+
+        reset.setOnClickListener(new OnClickListener() {
+            public void onClick(View v) {
+                mConnectedThread.write("qqq");
             }
         });
 
@@ -127,16 +187,34 @@ public class MainActivity extends Activity {
                     m1.setVolume(0,0);
                     m2.setVolume(0,0);
                     m3.setVolume(0,0);
-                    boing.setVolume(0,0);
+                    //boing.setVolume(0,0);
+                    //giggle.setVolume(0,0);
                 } else {
                     m1.setVolume(1,1);
                     m2.setVolume(1,1);
                     m3.setVolume(1,1);
-                    boing.setVolume(1,1);
+                    //boing.setVolume(1,1);
+                    //giggle.setVolume(1,1);
                 }
 
+                mConnectedThread.write("111");
 
+            }
+        });
 
+        m1.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+            public void onCompletion(MediaPlayer mp) {
+                mConnectedThread.write("zzzz");
+            }
+        });
+        m2.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+            public void onCompletion(MediaPlayer mp) {
+                mConnectedThread.write("zzz");
+            }
+        });
+        m3.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+            public void onCompletion(MediaPlayer mp) {
+                mConnectedThread.write("zzz");
             }
         });
 
@@ -149,14 +227,12 @@ public class MainActivity extends Activity {
                 } catch (Exception f){}
                 try {
 
-                    outStream.write("aaa".getBytes());
+                    outStream.write("".getBytes());
                 } catch (IOException e1) {
-                    Toast.makeText(getBaseContext(), "Connecting ...", Toast.LENGTH_LONG).show();
                     try {
                         btSocket.close();
                     } catch (Exception e){}
-                    Toast.makeText(getBaseContext(), "Connected", Toast.LENGTH_LONG).show();
-                    onResume();
+                        onResume();
                 }
                 try {
                     btSocket.connect();
@@ -290,7 +366,7 @@ public class MainActivity extends Activity {
         }
 
         public void run() {
-            byte[] buffer = new byte[256];  // buffer store for the stream
+            byte[] buffer = new byte[3];  // buffer store for the stream
             int bytes; // bytes returned from read()
 
             // Keep listening to the InputStream until an exception occurs
